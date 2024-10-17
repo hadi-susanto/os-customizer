@@ -5,5 +5,5 @@ It's recommended to install and configure following package / software before co
 
 > I promise to do not use any deprecated `cli` or any other `package`
 
-1. `apt-fast`: to allow faster package download, default `apt` or `apt-get` was slow enough.
+1. `apt-fast`: to allow faster package download, default `apt` or `apt-get` was slow enough. ([README.md](apt-fast/README.md))
 
