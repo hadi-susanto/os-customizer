@@ -20,11 +20,11 @@ I will take [Insync](https://www.insynchq.com/downloads/linux#apt) as example, t
 
 ![Insync using apt-key](images/insync-apt-key.png "Insync using apt-key")
 
-Based on thier guide it will be command should be:
+First we need to extract Insync gpg key, based on their guide:
 
 `sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ACCAF35C`
 
-Above command will make Insync key trusted for every repositories, it was a bad practice, we need to download the key manually and store it in "correct" place.
+Above command will make Insync key trusted for every repositories, it was a bad practice. Let fix it:
 
 - To obtain the key we will use `keyserver.ubuntu.com` server, open it and search for `0xACCAF35C` (it come from `--recv-keys ACCAF35C` part prefixed with `0x`).
 - Once the key was found you will be redirected to `https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=index`
@@ -32,11 +32,11 @@ Above command will make Insync key trusted for every repositories, it was a bad 
   - command: `curl -o insync.asc "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get"`
 - Given key was in armored format, refer to `-----BEGIN PGP PUBLIC KEY BLOCK-----` in the beginning, we have to dearmor it first.
 - Dearmor by `gpg` CLI
-  - command: `gpg --dearmor --output insync.gpg insync.asc`
-- Do in one line: `curl "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get" | gpg --dearmor --output insync.gpg`
+  - command: `sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg insync.asc`
+- Do in one line: `curl "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get" | sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg`
 
 Technically speaking you can put the dearmored gpg key anywhere in your system directory, but it's recommended to put those keys inside same folder.
-`apt-add-reposiory` will store gpg key under `/etx/apt/keyrings/` folder, we should follow the lead.
+`apt-add-reposiory` will store gpg key under `/etc/apt/keyrings/` folder, we should follow the lead.
 
 ## Write correct apt `source.list` with proper key
 
