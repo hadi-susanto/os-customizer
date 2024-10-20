@@ -1,4 +1,4 @@
-# README for 3rd party repository / PPA
+# README for 3rd party repository / PPA packages
 
 I prefer linux nowadays compared to windows, but I still have some issues such as:
 
