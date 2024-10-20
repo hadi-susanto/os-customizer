@@ -40,7 +40,7 @@ Technically speaking you can put the dearmored gpg key anywhere in your system d
 
 ## Write correct apt `source.list` with proper key
 
-![Insync source.list.d](images/insync-apt-key.png "Insync source.list.d")
+![Insync source.list.d](images/insync-source-list.png "Insync source.list.d")
 
 Once gpg key successfully extracted we have to add the repository to `apt.source.d`. For the content should follow Insync guide with additional configuration. (TL;DR we need to add `signed-by=...` attribute)
 
