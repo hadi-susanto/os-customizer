@@ -1,4 +1,4 @@
-# README for 3rd party repository / PPA
+# README for 3rd party repository / PPA packages
 
 I prefer linux nowadays compared to windows, but I still have some issues such as:
 
@@ -45,7 +45,22 @@ Technically speaking you can put the dearmored gpg key anywhere in your system d
 Once gpg key successfully extracted we have to add the repository to `apt.source.d`. For the content should follow Insync guide with additional configuration. (TL;DR we need to add `signed-by=...` attribute)
 
 ```sh
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync-virginia.gpg] http://apt.insync.io/mint virginia non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync.gpg] http://apt.insync.io/mint virginia non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list
 ```
 
 Additionally we can add `arch=amd64` before `signed-by=...` attribute.
+
+# Ready to use software (already built by provider)
+
+In case your software already build by the provider, and they didn't provide any repository, then just download it.
+The only rule applied to this scenario is: **Install in non system partition (mandatory), then create menu link (optional)**
+
+## Software binary already built
+
+This a pure bliss, the software is "portable" and can be run directly.
+
+> Pro Tips: utilize `ln` to allow seamless application rollback
+
+## `.deb` installation provided
+
+This a pure bliss, just double click, it's similar with `.exe` / `.msi` installer from Windows.
