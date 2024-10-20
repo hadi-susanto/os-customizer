@@ -18,7 +18,7 @@ I will take [Insync](https://www.insynchq.com/downloads/linux#apt) as example, t
 
 ## Migrate from `apt-key` to safer approach manually
 
-![Insync using apt-key](/images/insync-apt-key.png "Insync using apt-key")
+![Insync using apt-key](images/insync-apt-key.png "Insync using apt-key")
 
 Based on thier guide it will be command should be:
 
@@ -40,7 +40,7 @@ Technically speaking you can put the dearmored gpg key anywhere in your system d
 
 ## Write correct apt `source.list` with proper key
 
-![Insync source.list.d](/images/insync-apt-key.png "Insync source.list.d")
+![Insync source.list.d](images/insync-apt-key.png "Insync source.list.d")
 
 Once gpg key successfully extracted we have to add the repository to `apt.source.d`. For the content should follow Insync guide with additional configuration. (TL;DR we need to add `signed-by=...` attribute)
 
