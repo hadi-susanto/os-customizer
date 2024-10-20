@@ -49,3 +49,18 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync.gpg] http://apt.insync.
 ```
 
 Additionally we can add `arch=amd64` before `signed-by=...` attribute.
+
+# Ready to use software (already built by provider)
+
+In case your software already build by the provider, and they didn't provide any repository, then just download it.
+The only rule applied to this scenario is: **Install in non system partition (mandatory), then create menu link (optional)**
+
+## Software binary already built
+
+This a pure bliss, the software is "portable" and can be run directly.
+
+> Pro Tips: utilize `ln` to allow seamless application rollback
+
+## `.deb` installation provided
+
+This a pure bliss, just double click, it's similar with `.exe` / `.msi` installer from Windows.

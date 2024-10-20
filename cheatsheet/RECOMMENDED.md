@@ -1,4 +1,4 @@
-# CHEAT SHEET
+# RECOMMENDED packages
 
 Contains all recommended 3rd party repositories and their packages. Installing this packages will improve daily tasks.
 
@@ -6,7 +6,7 @@ Contains all recommended 3rd party repositories and their packages. Installing t
 
 # `apt-fast` a wrapper for `apt-get`
 
-Please read [`apt-fast` README.md](apt-fast/README.md)
+Please read [`apt-fast` README.md](../apt-fast/README.md)
 
 # `zsh` a `bash` replacement
 
@@ -45,7 +45,7 @@ fc-cache -f -v
 rm -r inconsolata
 ```
 
-Install awesome [powerlevel10k](https://github.com/romkatv/powerlevel10k) `zsh` theme. Please `git clone` into dedicated folder instead of `HOME` folder.
+Install awesome [powerlevel10k](https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#manual) `zsh` theme. Please `git clone` into dedicated folder instead of `HOME` folder.
 
 ```sh
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git [/path/to/powerlevel10k]
@@ -105,7 +105,7 @@ sudo apt-get install cryptomator
 
 Reference:
 - [insync installation](https://www.insynchq.com/downloads/linux#apt)
-- [3rd party repositories](repositories/README.md)
+- [3rd party repositories](../repositories/README.md#adding-3rd-party-repository-in-the-correct-way)
 
 ```sh
 curl "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get" | sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg
