@@ -115,3 +115,14 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync.gpg] http://apt.insync.
 sudo apt-get update
 sudo apt-get install insync
 ```
+
+# `bat` a `cat` replacement
+
+Reference:
+- [`bat` installation](https://github.com/sharkdp/bat?tab=readme-ov-file#on-ubuntu-using-apt)
+- [`.deb` provided](repositories/README.md#deb-installation-provided)
+
+**IMPORTANT**
+- Ensure your distribution contains latest version of `bat` package.
+- Please use `.deb` package from GitHub in case your distribution didn't include latest one.
+- Try `batdiff` and `man git` and impress yourself.
