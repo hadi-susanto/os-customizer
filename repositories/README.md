@@ -45,7 +45,7 @@ Technically speaking you can put the dearmored gpg key anywhere in your system d
 Once gpg key successfully extracted we have to add the repository to `apt.source.d`. For the content should follow Insync guide with additional configuration. (TL;DR we need to add `signed-by=...` attribute)
 
 ```sh
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync-virginia.gpg] http://apt.insync.io/mint virginia non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync.gpg] http://apt.insync.io/mint virginia non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list
 ```
 
 Additionally we can add `arch=amd64` before `signed-by=...` attribute.
