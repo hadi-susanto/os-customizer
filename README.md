@@ -5,5 +5,8 @@ It's recommended to install and configure following package / software before co
 
 > I promise to do not use any deprecated `cli` or any other `package`
 
+**TL;DR**: [Cheat Sheet](CHEATSHEET.md)
+
 1. `apt-fast`: to allow faster package download, default `apt` or `apt-get` was slow enough. ([README.md](apt-fast/README.md))
+2. Third party repository: Add 3rd party repository in a correct way, a guide for deprecated `apt-key` ([README.md](repositories/README.md))
 
