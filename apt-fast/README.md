@@ -13,14 +13,13 @@ sudo apt-get update
 sudo apt-get -y install apt-fast
 ```
 
-## Configurations
+## Tips
 
 - [Linux Mint](https://www.linuxmint.com/) should use `apt-get` don't choose `apt` when you configure `apt-fast`.
 - Other settings in wizard step can use default value.
-- Adjust downloads cache to other directory beside default one (`/var/cache/apt/apt-fast`) since our `/` partition is limited by design.
-  - Edit `apt-fast` configuration `sudo nano /etc/apt-fast.conf`
-  - Look for `DLDIR` key and change to `DLDIR=/mnt/path/new-cache/apt-fast-download`
-  - Do **NOT** update `APTCACHE` yet!
+- `apt-fast` confuguration can be found at: `/etc/apt-fast.conf`, read it for it's documentation.
+- Make sure to execute `apt-get clean` once in a while to remove `apt` caches which reside in `/var/caches/apt`.
+- Execuite `apt-get autoremove` and `apt-get autoclean` once in a while also recommended.
 
 # Next To-Do
 
@@ -52,7 +51,9 @@ sudo chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
 source /usr/share/zsh/functions/Completion/Debian/_apt-fast
 ```
 
-## [RECOMMENDED] Change default `apt` cache location
+## [OPTIONAL] Change default `apt` cache location
+
+**WARNING**: for now it will lead to `Download is performed unsandboxed as root as file` warning messages. Until a proper fix found, this step should be **OPTIONAL**.
 
 `apt-fast` is wrapper around `apt` and `apt-get`, once packages downloaded it will copy those files into `apt` cache and trigger `apt` command.
 It's a good idea to move `apt` cache from system directory to other non system partition (because of limited space).
@@ -65,7 +66,9 @@ sudo nano /etc/apt/apt.conf.d/99-os-customization
 ```
 
 Write `dir::cache::archives /path/to/new/directory;` into `99-os-customization` and save it.
-Don't forget to update `apt-fast` config `APTCACHE` value to `/path/to/new/directory`.
+Don't forget:
+- Update `apt-fast` config `APTCACHE` value to `/path/to/new/directory`.
+- Update `apt-fast` config `DLDIR` value to `/path/to/other/directory` and this directory **SHOULD** be in same partition as `APTCACHE` one.
 
 ### Encounter Warning Message
 
