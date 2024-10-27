@@ -52,7 +52,9 @@ sudo chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
 source /usr/share/zsh/functions/Completion/Debian/_apt-fast
 ```
 
-## [RECOMMENDED] Change default `apt` cache location
+## [OPTIONAL] Change default `apt` cache location
+
+**WARNING**: for now it will lead to `Download is performed unsandboxed as root as file` warning messages. Until a proper fix found, this step should be **OPTIONAL**.
 
 `apt-fast` is wrapper around `apt` and `apt-get`, once packages downloaded it will copy those files into `apt` cache and trigger `apt` command.
 It's a good idea to move `apt` cache from system directory to other non system partition (because of limited space).
@@ -65,7 +67,9 @@ sudo nano /etc/apt/apt.conf.d/99-os-customization
 ```
 
 Write `dir::cache::archives /path/to/new/directory;` into `99-os-customization` and save it.
-Don't forget to update `apt-fast` config `APTCACHE` value to `/path/to/new/directory`.
+Don't forget:
+- Update `apt-fast` config `APTCACHE` value to `/path/to/new/directory`.
+- Update `apt-fast` config `DLDIR` value to `/path/to/other/directory` and this directory **SHOULD** be in same partition as `APTCACHE` one.
 
 ### Encounter Warning Message
 
