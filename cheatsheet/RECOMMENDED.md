@@ -6,7 +6,13 @@ Contains all recommended 3rd party repositories and their packages. Installing t
 
 # `apt-fast` a wrapper for `apt-get`
 
-Please read [`apt-fast` README.md](../apt-fast/README.md)
+```sh
+sudo add-apt-repository ppa:apt-fast/stable
+sudo apt-get update
+sudo apt-get -y install apt-fast
+```
+
+Please read [`apt-fast` README.md](../apt-fast/README.md) for further reading and `zsh` completion. This page only list the package without additional actions.
 
 # `zsh` a `bash` replacement
 
