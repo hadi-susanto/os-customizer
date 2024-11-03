@@ -33,7 +33,7 @@ Above command will make Insync key trusted for every repositories, it was a bad 
 - Given key was in armored format, refer to `-----BEGIN PGP PUBLIC KEY BLOCK-----` in the beginning, we have to dearmor it first.
 - Dearmor by `gpg` CLI
   - command: `sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg insync.asc`
-- Do in one line: `curl "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get" | sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg`
+- Do in one line: `curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get" | sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg`
 
 Technically speaking you can put the dearmored gpg key anywhere in your system directory, but it's recommended to put those keys inside same folder.
 `apt-add-reposiory` will store gpg key under `/etc/apt/keyrings/` folder, we should follow the lead.

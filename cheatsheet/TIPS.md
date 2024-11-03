@@ -10,3 +10,13 @@ but worth it since we able to see any error quickly. Reference: [Linux Mint Foru
 1. Edit `GRUB` default by issuing `sudo nano /etc/default/grub`.
 2. Change `GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"` to `GRUB_CMDLINE_LINUX_DEFAULT="quiet"`. You may remove `quiet` parameter to have more logs.
 3. Save it and trigger `GRUB` update by `sudo update-grub`.
+
+## Disable asterisk (`*`) when typing password in terminal
+
+Reference: [Linux Mint Release](https://blog.linuxmint.com/?p=3715#comment-147187).
+
+```sh
+sudo mv /etc/sudoers.d/0pwfeedback /etc/sudoers.d/0pwfeedback.disabled
+```
+
+**FYI:** Relogin is required, to apply this feature.
