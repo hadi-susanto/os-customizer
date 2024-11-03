@@ -116,7 +116,7 @@ Reference:
 **IMPORTANT:** for `[codename]` placeholder please refer to [mint codename](https://linuxmint.com/download_all.php).
 
 ```sh
-curl "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get" | sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg
+curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get" | sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg
 echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync.gpg] http://apt.insync.io/mint [codename] non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list
 sudo apt-get update
 sudo apt-get install insync

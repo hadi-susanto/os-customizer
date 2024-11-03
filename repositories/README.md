@@ -33,7 +33,7 @@ Above command will make Insync key trusted for every repositories, it was a bad 
 - Given key was in armored format, refer to `-----BEGIN PGP PUBLIC KEY BLOCK-----` in the beginning, we have to dearmor it first.
 - Dearmor by `gpg` CLI
   - command: `sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg insync.asc`
-- Do in one line: `curl "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get" | sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg`
+- Do in one line: `curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get" | sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg`
 
 Technically speaking you can put the dearmored gpg key anywhere in your system directory, but it's recommended to put those keys inside same folder.
 `apt-add-reposiory` will store gpg key under `/etc/apt/keyrings/` folder, we should follow the lead.
@@ -49,6 +49,32 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync.gpg] http://apt.insync.
 ```
 
 Additionally we can add `arch=amd64` before `signed-by=...` attribute.
+
+## Migrate from `/etc/apt/trusted.gpg.d` global `gpg` key trust folder.
+
+Storing `gpg` key under `/etc/apt/trusted.gpg.d` have similar effect with `apt-key` command which store in `trusted.gpg` file.
+
+Based on [official guide](https://software.opensuse.org/download.html?project=home%3AAlexx2000&package=doublecmd-gtk) installing double commander
+
+```sh
+echo 'deb http://download.opensuse.org/repositories/home:/Alexx2000/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/home:Alexx2000.list
+curl -fsSL https://download.opensuse.org/repositories/home:Alexx2000/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_Alexx2000.gpg > /dev/null
+sudo apt update
+sudo apt install doublecmd-gtk
+```
+
+- There is no issue with first command, it will store software source in a dedicated file, but it missing `signed-by=...` attribute
+- On line #2 it will store `gpg` key inside `/etc/apt/trusted.gpg.d` which will be accepted for every repositories.
+- No issues with line #3 and #4
+
+Fixing will be easy, we just need to change `gpg` output and add `signed-by=...` attribute as follow:
+
+```sh
+curl -fsSL https://download.opensuse.org/repositories/home:Alexx2000/xUbuntu_22.04/Release.key | sudo gpg --dearmor --output /etc/apt/keyrings/double-commander.gpg
+echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/double-commander.gpg] http://download.opensuse.org/repositories/home:/Alexx2000/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/double-commander.list
+sudo apt-get update
+sudo apt-get install doublecmd-gtk
+```
 
 # Ready to use software (already built by provider)
 

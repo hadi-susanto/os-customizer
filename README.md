@@ -1,9 +1,10 @@
 # README
 
 **TL;DR**
-1. [Recommended Packages](cheatsheet/RECOMMENDED.md): Highly suggested, will make life easier.
-2. [Optional Packages](cheatsheet/OPTIONAL.md): Based on necessity, will be installed eventually.
-3. [Development Packages](cheatsheet/DEVELOPMENT.md): Depends on current jobs ;).
+1. [General Tips](cheatsheet/TIPS.md): Simple tips.
+2. [Recommended Packages](cheatsheet/RECOMMENDED.md): Highly suggested, will make life easier.
+3. [Optional Packages](cheatsheet/OPTIONAL.md): Based on necessity, will be installed eventually.
+4. [Development Packages](cheatsheet/DEVELOPMENT.md): Depends on current jobs ;).
 
 This will contains all the scripts / hacks / configurations after installing "proper OS" on my devices.
 It's recommended to install and configure following package / software before continuing your journey:
