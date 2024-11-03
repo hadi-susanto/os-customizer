@@ -50,6 +50,32 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync.gpg] http://apt.insync.
 
 Additionally we can add `arch=amd64` before `signed-by=...` attribute.
 
+## Migrate from `/etc/apt/trusted.gpg.d` global `gpg` key trust folder.
+
+Storing `gpg` key under `/etc/apt/trusted.gpg.d` have similar effect with `apt-key` command which store in `trusted.gpg` file.
+
+Based on [official guide](https://software.opensuse.org/download.html?project=home%3AAlexx2000&package=doublecmd-gtk) installing double commander
+
+```sh
+echo 'deb http://download.opensuse.org/repositories/home:/Alexx2000/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/home:Alexx2000.list
+curl -fsSL https://download.opensuse.org/repositories/home:Alexx2000/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_Alexx2000.gpg > /dev/null
+sudo apt update
+sudo apt install doublecmd-gtk
+```
+
+- There is no issue with first command, it will store software source in a dedicated file, but it missing `signed-by=...` attribute
+- On line #2 it will store `gpg` key inside `/etc/apt/trusted.gpg.d` which will be accepted for every repositories.
+- No issues with line #3 and #4
+
+Fixing will be easy, we just need to change `gpg` output and add `signed-by=...` attribute as follow:
+
+```sh
+curl -fsSL https://download.opensuse.org/repositories/home:Alexx2000/xUbuntu_22.04/Release.key | sudo gpg --dearmor --output /etc/apt/keyrings/double-commander.gpg
+echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/double-commander.gpg] http://download.opensuse.org/repositories/home:/Alexx2000/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/double-commander.list
+sudo apt-get update
+sudo apt-get install doublecmd-gtk
+```
+
 # Ready to use software (already built by provider)
 
 In case your software already build by the provider, and they didn't provide any repository, then just download it.

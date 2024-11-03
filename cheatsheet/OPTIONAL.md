@@ -35,3 +35,34 @@ Reference:
 1. Open [download page](https://deadbeef.sourceforge.io/download.html) and at `Stable builds` section choose `GNU/Linux`.
 2. Extract the archive to dedicated folder on non system partition.
 3. Create menu, done.
+
+## `doublecmd` GUI Dual pane file manager (Useful for copy large file)
+
+Reference:
+- [Double Commander download page](https://sourceforge.net/p/doublecmd/wiki/Download/)
+- [Double Commander DEB repositories](https://software.opensuse.org/download.html?project=home%3AAlexx2000&package=doublecmd-gtk)
+
+**IMPORTANT:**
+- `doublecmd` have 3 GUI flavours: `gtk`, `qt5`, and `qt6`. This guide will use `gtk` variant, refer to official download page for other variant repositories.
+- `[codename]` placeholder please refer to [official guide](https://software.opensuse.org/download.html?project=home%3AAlexx2000&package=doublecmd-gtk). Please drill down `Ubuntu` and find your ubuntu version there. They will use `xUbuntu_XX.YY` instead of [Ubuntu codename](https://wiki.ubuntu.com/Releases).
+
+```sh
+curl -fsSL https://download.opensuse.org/repositories/home:Alexx2000/[codename]/Release.key | sudo gpg --dearmor --output /etc/apt/keyrings/double-commander.gpg
+echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/double-commander.gpg] http://download.opensuse.org/repositories/home:/Alexx2000/[codename]/ /' | sudo tee /etc/apt/sources.list.d/double-commander.list
+sudo apt-get update
+sudo apt-get install doublecmd-gtk
+```
+
+**TIPS:**
+- Once installation done, you can change your "Default Application" or "Preferred Application" to `doublecmd` to override `Super + E` / `Winkey + E` shortcut.
+
+## `mc` Text-Based GUI dual pane file manager (Midnight Commander)
+
+```sh
+sudo apt-get update
+sudo apt-get install mc
+```
+
+**TIPS:**
+- Bottom bar key accelerator is `Alt` key, therefore `9 Menu` should be invoked as `Alt + 9` of `F9`.
+- Accelerator with `M-` prefix means `Ctrl +`, therefore `M-x, o` should be invoked as `Ctrl + x, o`.
