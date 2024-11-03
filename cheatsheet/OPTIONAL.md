@@ -36,7 +36,27 @@ Reference:
 2. Extract the archive to dedicated folder on non system partition.
 3. Create menu, done.
 
-## `doublecmd` GUI Dual pane file manager (Useful for copy large file)
+# `virtualbox` Virtualization engine
+
+Reference:
+- [VirtualBox download page](https://www.virtualbox.org/wiki/Linux_Downloads).
+
+## `.deb` package
+
+Dowload it from above page
+
+## Using repository
+
+Guide based on download page, please change `[codename]` with your [Ubuntu codename](https://wiki.ubuntu.com/Releases).
+
+```sh
+curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmor --output /etc/apt/keyrings/oracle-virtualbox.gpg
+echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/oracle-virtualbox.gpg] https://download.virtualbox.org/virtualbox/debian [codename] contrib' | sudo tee /etc/apt/sources.list.d/oracle-virtualbox.list
+sudo apt-get update
+sudo apt-get install virtualbox
+```
+
+# `doublecmd` GUI Dual pane file manager (Useful for copy large file)
 
 Reference:
 - [Double Commander download page](https://sourceforge.net/p/doublecmd/wiki/Download/)
@@ -56,7 +76,7 @@ sudo apt-get install doublecmd-gtk
 **TIPS:**
 - Once installation done, you can change your "Default Application" or "Preferred Application" to `doublecmd` to override `Super + E` / `Winkey + E` shortcut.
 
-## `mc` Text-Based GUI dual pane file manager (Midnight Commander)
+# `mc` Text-Based GUI dual pane file manager (Midnight Commander)
 
 ```sh
 sudo apt-get update
