@@ -20,3 +20,10 @@ sudo mv /etc/sudoers.d/0pwfeedback /etc/sudoers.d/0pwfeedback.disabled
 ```
 
 **FYI:** Relogin is required, to apply this feature.
+
+## Create Custom Firefox Profile
+
+Open terminal and invoke `firefox -p` to open Firefox's profile manager without running its web browser.
+Create a new profile with dedicated profile folder outside default one.
+Please don't delete `~/.mozilla` folder, otherwise your profiles may be unlinked.
+
