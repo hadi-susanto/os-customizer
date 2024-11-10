@@ -18,7 +18,7 @@ Reference:
 
 Just download it from official download page above.
 
-## Using repositories
+## Using repository
 
 ```sh
 curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor --output /etc/apt/keyrings/microsoft.gpg
