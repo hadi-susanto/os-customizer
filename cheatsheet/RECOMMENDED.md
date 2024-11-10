@@ -133,3 +133,33 @@ Reference:
 - Ensure your distribution contains latest version of `bat` package.
 - Please use `.deb` package from GitHub in case your distribution didn't include latest one.
 - Try `batdiff` and `man git` and impress yourself.
+
+# `dnscrypt-proxy` your DNS over HTTPS client
+
+Reference:
+- [Install dnscrypt-proxy on Ubuntu](https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Installation-on-Debian-and-Ubuntu).
+
+```sh
+sudo apt-get update
+sudo apt-get install dnscrypt-proxy
+```
+
+**After Installation**
+
+- Once `dnscrypt-proxy` installed, it will run without any configuration, we just need to change our DNS server to `127.0.0.1`. Open your network configuration and choose `Automatic (DHCP) addresses only`.
+- Change your `DoH` provider to provide some adblock, therefore your ad-blocking will be system wide.
+
+## Change `DoH` provider
+
+Reference:
+- [GitHub DNSCrypt and DoH servers](https://github.com/DNSCrypt/dnscrypt-resolvers?tab=readme-ov-file).
+
+You just need to change:
+- `server_names` from `cloudflare` to `mullvad-adblock-doh` or any other provider of your choice.
+- `sources.url` change `v2` to `v3` since your `dnscrypt-proxy` version is > `2.0.42`.
+
+```sh
+sudo cp /etc/dnscrypt-proxy/dnscrypt-proxy.toml /etc/dnscrypt-proxy/dnscrypt-proxy.toml.original
+sudo nano /etc/dnscrypt-proxy/dnscrypt-proxy.toml
+sudo systemctl restart dnscrypt-proxy
+```
