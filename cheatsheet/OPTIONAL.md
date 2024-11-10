@@ -77,6 +77,7 @@ sudo apt-get install doublecmd-gtk
 
 **TIPS:**
 - Once installation done, you can change your "Default Application" or "Preferred Application" to `doublecmd` to override `Super + E` / `Winkey + E` shortcut.
+- Open menu `Configuration` > `Options...` then search for `splash` and disable `Splash Screen`, enjoy. 
 
 # `mc` Text-Based GUI dual pane file manager (Midnight Commander)
 
