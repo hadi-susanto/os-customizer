@@ -49,11 +49,13 @@ Dowload it from above page
 
 Guide based on download page, please change `[codename]` with your [Ubuntu codename](https://wiki.ubuntu.com/Releases).
 
+**IMPORTANT:** please refer to latest virtual box version in the download page before installing.
+
 ```sh
 curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmor --output /etc/apt/keyrings/oracle-virtualbox.gpg
 echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/oracle-virtualbox.gpg] https://download.virtualbox.org/virtualbox/debian [codename] contrib' | sudo tee /etc/apt/sources.list.d/oracle-virtualbox.list
 sudo apt-get update
-sudo apt-get install virtualbox
+sudo apt-get install virtualbox-7.1
 ```
 
 # `doublecmd` GUI Dual pane file manager (Useful for copy large file)
