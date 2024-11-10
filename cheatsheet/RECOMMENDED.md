@@ -16,16 +16,16 @@ Please read [`apt-fast` README.md](../apt-fast/README.md) for further reading an
 
 # `zsh` a `bash` replacement
 
+References:
+- [Installing zsh](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
+- [zsh auto complete select](https://unix.stackexchange.com/questions/267551/how-can-i-configure-zsh-completion-to-launch-a-menu-for-command-options)
+
 ```sh
 sudo apt-get install zsh
 chsh -s $(which zsh)
 ```
 
-Once done, reopen your terminal app and configure `zsh` for the first time.
-
-References:
-- [Installing zsh](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
-- [zsh auto complete select](https://unix.stackexchange.com/questions/267551/how-can-i-configure-zsh-completion-to-launch-a-menu-for-command-options)
+Please relogin after applying `chsh` since changing `shell` need relogin. Once relogin please trigger your terminal app.
 
 ## `zsh` extensions
 
