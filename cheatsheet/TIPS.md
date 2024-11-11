@@ -43,3 +43,27 @@ Reference:
 | `F3`         | Show/Hide Extra Pane (vertical split pane)                       |
 | `F6`         | Toggle beetween Left/Right pane (require Extra Pane to be shown) |
 | `F9`         | Show/Hide Tree View                                              |
+
+## Double Commander (`doublecmd`)
+
+Reference:
+- [Double Commander Forum](https://doublecmd.h1n.ru/viewtopic.php?t=529).
+
+**TIPS:**
+- Linux Mint please remove following global shortcuts: `General > Show the window selection screen`, `General > Show the workspace selection screen`, and `General > Run dialog`.
+
+| Key        | Description             |
+|------------|-------------------------|
+| `Alt + F1` | Change drive left pane  |
+| `Alt + F2` | Change drive right pane |
+
+# Edit `xed`, `gedit` Syntax Highlighting
+
+Reference:
+- [Askubuntu Create Custom Syntax Highlight](https://askubuntu.com/questions/473114/create-a-custom-syntax-highlight-in-gedit).
+
+```sh
+sudo nano /usr/share/gtksourceview-4/language-specs/sh.lang
+```
+- It seems on my computer it using `gtksourceview-4` instead of `gtksourceview-3.0`.
+

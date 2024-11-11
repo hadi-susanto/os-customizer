@@ -1,7 +1,7 @@
 # README
 
-This will contains all the scripts / hacks / configurations after installing "proper OS" on my devices.
-It's recommended to install and configure following package / software before continuing your installation:
+This will contains all the scripts / hacks / configurations after installing "proper OS" (Read: Linux Mint) on my personal workstation.
+These guides / cheatsheets are build based on Linux Mint (Ubuntu derivative), therefore it may be can be used for Ubuntu, but cross your fingers.
 
 ## Usage
 

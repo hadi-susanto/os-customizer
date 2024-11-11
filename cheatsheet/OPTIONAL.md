@@ -58,7 +58,7 @@ sudo apt-get update
 sudo apt-get install virtualbox-7.1
 ```
 
-# `doublecmd` GUI Dual pane file manager (Useful for copy large file)
+# `doublecmd` GUI dual pane file manager
 
 Reference:
 - [Double Commander download page](https://sourceforge.net/p/doublecmd/wiki/Download/)
@@ -79,7 +79,7 @@ sudo apt-get install doublecmd-gtk
 - Once installation done, you can change your "Default Application" or "Preferred Application" to `doublecmd` to override `Super + E` / `Winkey + E` shortcut.
 - Open menu `Configuration` > `Options...` then search for `splash` and disable `Splash Screen`, enjoy. 
 
-# `mc` Text-Based GUI dual pane file manager (Midnight Commander)
+# `mc` TUI dual pane file manager
 
 ```sh
 sudo apt-get update
@@ -89,3 +89,4 @@ sudo apt-get install mc
 **TIPS:**
 - Bottom bar key accelerator is `Alt` key, therefore `9 Menu` should be invoked as `Alt + 9` of `F9`.
 - Accelerator with `M-` prefix means `Ctrl +`, therefore `M-x, o` should be invoked as `Ctrl + x, o`.
+

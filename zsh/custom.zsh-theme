@@ -1,19 +1,21 @@
-# allow automatic open auto-completion
-zstyle ':completion:*' menu yes select
+# enable Ctrl + S for forward search (https://stackoverflow.com/questions/791765/unable-to-forward-search-bash-history-similarly-as-with-ctrl-r)
+stty -ixon
+# allow automatic open auto-completion (https://stackoverflow.com/questions/66507024/how-to-enable-tab-completion-arrow-keys-selection-for-the-kill-command-in-zsh)
+zstyle ':completion:*' menu select
 
-## require eza to be installed
-alias ls="eza --grid --color=always --icons=always --all --sort extension --group-directories-first"
-alias ls-tree="eza --grid --tree --color=always --icons=always --all --sort extension --group-directories-first"
-alias ll="eza --long --color=always --icons=always --all --sort extension --group-directories-first --header --time-style long-iso"
-alias ll-tree="eza --long --tree --color=always --icons=always --all --sort extension --group-directories-first --header --time-style long-iso"
-alias ll-size="eza --long --color=always --icons=always --all --sort extension --group-directories-first --header --time-style long-iso --total-size"
-alias ll-tree-size="eza --long --tree --color=always --icons=always --all --sort extension --group-directories-first --header --time-style long-iso --total-size"
-alias ll-size-tree="eza --long --tree --color=always --icons=always --all --sort extension --group-directories-first --header --time-style long-iso --total-size"
+if ! [[ -v PLUGINS ]]
+then
+  # Don't load any plugins unless defined
+  PLUGINS=()
+fi
 
-## require bat to be installed
-export BAT_THEME="Dracula"
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-alias cat="bat --paging=never"
-batdiff() {
-    git diff --name-only --relative --diff-filter=d | xargs bat --diff
-}
+for plugin in ${PLUGINS[@]}
+do
+  if command -v $plugin 2>&1 > /dev/null
+  then
+    source "$OS_CUSTOMIZER_BASE_PATH/zsh/$plugin.zsh-theme"
+  else
+    echo "Skip loading plugin: $plugin (required executable not available)"
+  fi
+done
+
