@@ -9,10 +9,18 @@ Contains all recommended 3rd party repositories and their packages. Installing t
 ```sh
 sudo add-apt-repository ppa:apt-fast/stable
 sudo apt-get update
-sudo apt-get -y install apt-fast
+sudo apt-get install apt-fast
 ```
 
-Please read [`apt-fast` README.md](../apt-fast/README.md) for further reading and `zsh` completion. This page only list the package without additional actions.
+## `apt-fast` auto completion
+
+**WARNING:** To be run after `zsh` installed, otherwise you may encounter command not found error. Please read [`apt-fast` README.md](../apt-fast/README.md) for further reading and `zsh` completion. This page only list the package without additional actions.
+
+```sh
+sudo cp ./zsh/_apt-fast /usr/share/zsh/functions/Completion/Debian/_apt-fast
+sudo chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
+source /usr/share/zsh/functions/Completion/Debian/_apt-fast
+```
 
 # `zsh` a `bash` replacement
 
@@ -56,7 +64,7 @@ only `Ctrl + R` works ([reference](https://stackoverflow.com/questions/791765/un
 
 ### Add our custom scripts:
 
-**WARNING**: It may require some other packages to be installed such as `eza`.
+**WARNING**: It may require some other packages to be installed such as `eza`, `bat`.
 Please check latest `zsh/custom.zsh-theme` for details.
 
 ```sh
@@ -114,11 +122,13 @@ Reference:
 - [insync installation](https://www.insynchq.com/downloads/linux#apt)
 - [3rd party repositories](../repositories/README.md#adding-3rd-party-repository-in-the-correct-way)
 
-**IMPORTANT:** for `[codename]` placeholder please refer to [mint codename](https://linuxmint.com/download_all.php).
+**IMPORTANT:** 
+- `[codename]` placeholder refer to [mint codename](https://linuxmint.com/download_all.php).
+- This script will utlize `lsb_release -c -s` to automatically retrieve Linux Mint codename.
 
 ```sh
 curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get" | sudo gpg --dearmor --output /etc/apt/keyrings/insync.gpg
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync.gpg] http://apt.insync.io/mint [codename] non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync.gpg] http://apt.insync.io/mint $(lsb_release -c -s) non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list
 sudo apt-get update
 sudo apt-get install insync
 ```
@@ -131,7 +141,7 @@ Reference:
 
 **IMPORTANT**
 - Ensure your distribution contains latest version of `bat` package.
-- Please use `.deb` package from GitHub in case your distribution didn't include latest one.
+- Please use `.deb` package from GitHub in case your distribution didn't include latest one. (Download at: [`bat` GitHub Page](https://github.com/sharkdp/bat))
 - Try `batdiff` and `man git` and impress yourself.
 
 # `dnscrypt-proxy` your DNS over HTTPS client
@@ -146,8 +156,11 @@ sudo apt-get install dnscrypt-proxy
 
 **After Installation**
 
-- Once `dnscrypt-proxy` installed, it will run without any configuration, we just need to change our DNS server to `127.0.0.1`. Open your network configuration and choose `Automatic (DHCP) addresses only`.
+- Please check where `dnscrypt-proxy` listening by execute `cat /lib/systemd/system/dnscrypt-proxy.socket`, look for `ListenStream` and `ListenDatagram` value.
+- Open your network configuration and choose `Automatic (DHCP) addresses only`.
+- Put DNS sever with value from `.socket` one it should be `127.0.0.1` or `127.0.2.1`.
 - Change your `DoH` provider to provide some adblock, therefore your ad-blocking will be system wide.
+- Execute `systemctl status dnscrypt-proxy-resolvconf.service`, it said service was `inactive` because of `ConditionFileIsExecutable=/sbin/resolvconf was not met`, then just disable it.
 
 ## Change `DoH` provider
 
@@ -163,3 +176,4 @@ sudo cp /etc/dnscrypt-proxy/dnscrypt-proxy.toml /etc/dnscrypt-proxy/dnscrypt-pro
 sudo nano /etc/dnscrypt-proxy/dnscrypt-proxy.toml
 sudo systemctl restart dnscrypt-proxy
 ```
+

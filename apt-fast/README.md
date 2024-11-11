@@ -10,7 +10,7 @@ The wrapper will perform simultaneous download then move them into your package 
 ```sh
 sudo add-apt-repository ppa:apt-fast/stable
 sudo apt-get update
-sudo apt-get -y install apt-fast
+sudo apt-get install apt-fast
 ```
 
 ## Tips
