@@ -12,16 +12,6 @@ sudo apt-get update
 sudo apt-get install apt-fast
 ```
 
-## `apt-fast` auto completion
-
-**WARNING:** To be run after `zsh` installed, otherwise you may encounter command not found error. Please read [`apt-fast` README.md](../apt-fast/README.md) for further reading and `zsh` completion. This page only list the package without additional actions.
-
-```sh
-sudo cp ./zsh/_apt-fast /usr/share/zsh/functions/Completion/Debian/_apt-fast
-sudo chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
-source /usr/share/zsh/functions/Completion/Debian/_apt-fast
-```
-
 # `zsh` a `bash` replacement
 
 References:
@@ -35,9 +25,7 @@ chsh -s $(which zsh)
 
 Please relogin after applying `chsh` since changing `shell` need relogin. Once relogin please trigger your terminal app.
 
-## `zsh` extensions
-
-### powerlevel10k zsh theme
+## powerlevel10k zsh theme
 
 This theme is require [Nerd Font](https://www.nerdfonts.com/) to work at the fullest, after some consideration I opted to `Inconsolata Nerd Font`.
 This repository contains a copy of it for easier installation, but you can find font latest version at: [here](https://www.nerdfonts.com/font-downloads).
@@ -62,13 +50,27 @@ Re-open your `zsh` instance to trigger powerlevel10k wizard. Once done please pr
 it will allow you to perform `Ctrl + R` (reverse search) and `Ctrl + S` (forward search). Without `stty -ixon`,
 only `Ctrl + R` works ([reference](https://stackoverflow.com/questions/791765/unable-to-forward-search-bash-history-similarly-as-with-ctrl-r)).
 
-### Add our custom scripts:
+## Add our custom scripts:
 
-**WARNING**: It may require some other packages to be installed such as `eza`, `bat`.
-Please check latest `zsh/custom.zsh-theme` for details.
+**WARNING:**
+- Run following script from repository root folder! Fail to comply may result failed installation.
+- By default `git`, `eza`, and `bat` plugins will be loaded, please configure later after installation done.
+- Plugins will be loaded if required command found.
 
 ```sh
-echo "source $PWD/zsh/custom.zsh-theme" >> ~/.zshrc
+chmod +x ./zsh/install.sh
+./zsh/install.sh
+```
+
+## `apt-fast` auto completion
+
+**WARNING:** Execute following script after `zsh` installed, otherwise you may encounter command not found error.
+Please read [`apt-fast` README.md](../apt-fast/README.md) for further reading and `zsh` completion. This page only list the package without additional actions.
+
+```sh
+sudo cp ./zsh/_apt-fast /usr/share/zsh/functions/Completion/Debian/_apt-fast
+sudo chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
+source /usr/share/zsh/functions/Completion/Debian/_apt-fast
 ```
 
 # `eza` a replacement for `ls`
