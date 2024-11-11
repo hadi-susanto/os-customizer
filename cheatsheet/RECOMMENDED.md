@@ -179,3 +179,16 @@ sudo nano /etc/dnscrypt-proxy/dnscrypt-proxy.toml
 sudo systemctl restart dnscrypt-proxy
 ```
 
+# `dconf-editor` low level system variables editor
+
+Reference:
+- [Change Linux Mint Battery Thershold](https://forums.linuxmint.com/viewtopic.php?t=407896).
+
+Tips:
+- For battery settings: `/org/cinnamon/settings-daemon/plugins/power/`
+
+```sh
+sudo apt-get update
+sudo apt-get install dconf-editor
+```
+

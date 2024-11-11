@@ -1,5 +1,6 @@
 #! /bin/bash
 
+# https://rowannicholls.github.io/bash.html
 echo "OS Customizer ZSH Theme Installer"
 echo "---------------------------------"
 echo
@@ -28,4 +29,8 @@ echo "Appending .zshrc.bak-$suffix to customized .zshrc ..."
 cat ~/.zshrc.bak-$suffix >> ~/.zshrc
 
 echo "Done, please check your ~/.zshrc"
+read -p "Do you want to remove backup file? (y/N: )" confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 0
+
+rm ~/.zshrc.bak-$suffix
+echo "~/.zshrc.bak-$suffix removed"
 
