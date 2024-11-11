@@ -18,3 +18,4 @@ do
     echo "Skip loading plugin: $plugin (required executable not available)"
   fi
 done
+

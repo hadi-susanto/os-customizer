@@ -5,3 +5,4 @@ alias ll-tree="eza --long --tree --color=always --icons=always --all --sort exte
 alias ll-size="eza --long --color=always --icons=always --all --sort extension --group-directories-first --header --time-style long-iso --total-size"
 alias ll-tree-size="eza --long --tree --color=always --icons=always --all --sort extension --group-directories-first --header --time-style long-iso --total-size"
 alias ll-size-tree="eza --long --tree --color=always --icons=always --all --sort extension --group-directories-first --header --time-style long-iso --total-size"
+

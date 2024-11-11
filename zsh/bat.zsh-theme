@@ -6,3 +6,4 @@ batdiff() {
 }
 
 alias cat="bat --paging=never"
+
