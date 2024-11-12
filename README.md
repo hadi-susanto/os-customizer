@@ -14,5 +14,6 @@ Don't forget to generate your SSH key first by invoking `ssh-keygen` and registe
 4. [Development Packages](cheatsheet/DEVELOPMENT.md): Depends on current jobs ;).
 
 ## To Read
-1. `apt-fast`: to allow faster package download, default `apt` or `apt-get` was slow enough. ([README.md](apt-fast/README.md))
-2. Third party repository: Add 3rd party repository in a correct way, a guide for deprecated `apt-key` ([README.md](repositories/README.md))
+1. `apt-fast`: to allow faster package download, default `apt` or `apt-get` was slow enough. ([APT-FAST.md](APT-FAST.md))
+2. Third party repository: Add 3rd party repository in a correct way, a guide for deprecated `apt-key` ([REPOSITORY.md](REPOSITORY.md))
+

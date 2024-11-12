@@ -85,3 +85,4 @@ References:
 - [https://askubuntu.com/questions/908800/what-does-this-apt-error-message-download-is-performed-unsandboxed-as-root](https://askubuntu.com/questions/908800/what-does-this-apt-error-message-download-is-performed-unsandboxed-as-root)
 - [https://askubuntu.com/questions/1403337/download-is-performed-unsandboxed-as-root-as-file](https://askubuntu.com/questions/1403337/download-is-performed-unsandboxed-as-root-as-file)
 - [https://linuxconfig.org/understanding-the-download-is-performed-unsandboxed-as-root-apt-error-in-ubuntu](https://linuxconfig.org/understanding-the-download-is-performed-unsandboxed-as-root-apt-error-in-ubuntu)
+

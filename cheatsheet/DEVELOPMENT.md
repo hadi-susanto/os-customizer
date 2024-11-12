@@ -28,3 +28,4 @@ sudo apt-get install microsoft-edge-stable
 sudo chmod -x /etc/cron.daily/microsoft-edge
 ll /opt/microsoft/msedge/cron
 ```
+

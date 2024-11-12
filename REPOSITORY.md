@@ -18,7 +18,7 @@ I will take [Insync](https://www.insynchq.com/downloads/linux#apt) as example, t
 
 ## Migrate from `apt-key` to safer approach manually
 
-![Insync using apt-key](images/insync-apt-key.png "Insync using apt-key")
+![Insync using apt-key](resources/insync-apt-key.png "Insync using apt-key")
 
 First we need to extract Insync gpg key, based on their guide:
 
@@ -40,7 +40,7 @@ Technically speaking you can put the dearmored gpg key anywhere in your system d
 
 ## Write correct apt `source.list` with proper key
 
-![Insync source.list.d](images/insync-source-list.png "Insync source.list.d")
+![Insync source.list.d](resources/insync-source-list.png "Insync source.list.d")
 
 Once gpg key successfully extracted we have to add the repository to `apt.source.d`. For the content should follow Insync guide with additional configuration. (TL;DR we need to add `signed-by=...` attribute)
 
@@ -90,3 +90,4 @@ This a pure bliss, the software is "portable" and can be run directly.
 ## `.deb` installation provided
 
 This a pure bliss, just double click, it's similar with `.exe` / `.msi` installer from Windows.
+

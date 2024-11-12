@@ -84,8 +84,6 @@ sudo apt-get update
 sudo apt-get install eza
 ```
 
-**INFORMATION**: [`zsh/custom.zsh-theme`](zsh/custom.zsh-theme) contains aliases for `eza` override `ls` and `ll`.
-
 # `terminator` terminal emulator with pane split capability
 
 Reference: [install gnome terminator](https://github.com/gnome-terminator/terminator/blob/master/INSTALL.md)
@@ -122,7 +120,7 @@ sudo apt-get install cryptomator
 
 Reference:
 - [insync installation](https://www.insynchq.com/downloads/linux#apt)
-- [3rd party repositories](../repositories/README.md#adding-3rd-party-repository-in-the-correct-way)
+- [3rd party repositories](../REPOSITORY.md#adding-3rd-party-repository-in-the-correct-way)
 
 **IMPORTANT:** 
 - `[codename]` placeholder refer to [mint codename](https://linuxmint.com/download_all.php).
@@ -139,7 +137,7 @@ sudo apt-get install insync
 
 Reference:
 - [`bat` installation](https://github.com/sharkdp/bat?tab=readme-ov-file#on-ubuntu-using-apt)
-- [`.deb` provided](repositories/README.md#deb-installation-provided)
+- [`.deb` provided](../REPOSITORY.md#deb-installation-provided)
 
 **IMPORTANT**
 - Ensure your distribution contains latest version of `bat` package.
