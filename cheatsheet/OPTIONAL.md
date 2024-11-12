@@ -8,7 +8,7 @@ Contains all optional packages, just install when needed.
 
 Reference:
 - [flameshot installation](https://github.com/flameshot-org/flameshot?tab=readme-ov-file#installation)
-- [`.deb` provided](repositories/README.md#deb-installation-provided)
+- [`.deb` provided](../REPOSITORY.md#deb-installation-provided)
 
 **IMPORTANT**:
 1. Please ensure your distribution have latest version, some distribution still use older version.
@@ -30,7 +30,7 @@ sudo apt-get install flameshot
 
 Reference:
 - [DeaDBeeF download](https://deadbeef.sourceforge.io/download.html). (Please use download instead of linux distribution package)
-- [Software binary already built](../repositories/README.md#software-binary-already-built)
+- [Software binary already built](../REPOSITORY.md#software-binary-already-built)
 
 1. Open [download page](https://deadbeef.sourceforge.io/download.html) and at `Stable builds` section choose `GNU/Linux`.
 2. Extract the archive to dedicated folder on non system partition.

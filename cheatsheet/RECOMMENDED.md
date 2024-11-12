@@ -65,7 +65,7 @@ chmod +x ./zsh/install.sh
 ## `apt-fast` auto completion
 
 **WARNING:** Execute following script after `zsh` installed, otherwise you may encounter command not found error.
-Please read [`apt-fast` README.md](../apt-fast/README.md) for further reading and `zsh` completion. This page only list the package without additional actions.
+Please read [APT-FAST.md](../APT-FAST.md) for further reading and `zsh` completion. This page only list the package without additional actions.
 
 ```sh
 sudo cp ./zsh/_apt-fast /usr/share/zsh/functions/Completion/Debian/_apt-fast
@@ -83,8 +83,6 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/eza-gierens.gpg] http://deb.gi
 sudo apt-get update
 sudo apt-get install eza
 ```
-
-**INFORMATION**: [`zsh/custom.zsh-theme`](zsh/custom.zsh-theme) contains aliases for `eza` override `ls` and `ll`.
 
 # `terminator` terminal emulator with pane split capability
 
@@ -122,7 +120,7 @@ sudo apt-get install cryptomator
 
 Reference:
 - [insync installation](https://www.insynchq.com/downloads/linux#apt)
-- [3rd party repositories](../repositories/README.md#adding-3rd-party-repository-in-the-correct-way)
+- [3rd party repositories](../REPOSITORY.md#adding-3rd-party-repository-in-the-correct-way)
 
 **IMPORTANT:** 
 - `[codename]` placeholder refer to [mint codename](https://linuxmint.com/download_all.php).
@@ -139,7 +137,7 @@ sudo apt-get install insync
 
 Reference:
 - [`bat` installation](https://github.com/sharkdp/bat?tab=readme-ov-file#on-ubuntu-using-apt)
-- [`.deb` provided](repositories/README.md#deb-installation-provided)
+- [`.deb` provided](../REPOSITORY.md#deb-installation-provided)
 
 **IMPORTANT**
 - Ensure your distribution contains latest version of `bat` package.
