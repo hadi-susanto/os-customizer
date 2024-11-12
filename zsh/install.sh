@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # https://rowannicholls.github.io/bash.html
 echo "OS Customizer ZSH Theme Installer"
