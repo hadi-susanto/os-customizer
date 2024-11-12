@@ -1,12 +1,17 @@
 #!/bin/bash
 
-# Detect whether we run with root privilege or not, installers script need to run with root privilege
+# Detect whether we run with root privilege or not, installers script may need to run with root privilege
 if [[ "$EUID" -ne 0 ]]; then
-  echo "$0 need root privilege to run, please execute 'sudo $0'"
-
-  exit 1
+  echo "WARNING: running on non root privilege !"
+  echo "OS Customizer Package Installer itself didn't require root privilege,"
+  echo "but individual installer may require root privilege for execution."
+  echo # Intentional blank line
+  echo "Depending on installer script you may be asked for root password while installing."
+  echo "To prevent entering root password while installing please re-run with 'sudo $0'"
+  echo -n "Press Enter to continue or Ctrl + C to abort."
+  read -r
+  echo # Intentional blank line
 fi
-
 
 # Define the installers path
 directory="installers"
