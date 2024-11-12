@@ -65,7 +65,7 @@ chmod +x ./zsh/install.sh
 ## `apt-fast` auto completion
 
 **WARNING:** Execute following script after `zsh` installed, otherwise you may encounter command not found error.
-Please read [`apt-fast` README.md](../apt-fast/README.md) for further reading and `zsh` completion. This page only list the package without additional actions.
+Please read [APT-FAST.md](../APT-FAST.md) for further reading and `zsh` completion. This page only list the package without additional actions.
 
 ```sh
 sudo cp ./zsh/_apt-fast /usr/share/zsh/functions/Completion/Debian/_apt-fast
