@@ -14,7 +14,7 @@ zsh_pre_install() {
 # Called after pre-install phase completed successfully
 # Installation phase, usually via package manager installation or manual download...
 zsh_install() {
-  sudo apt-get install zsh
+  sudo apt-get -y install zsh
 }
 
 # Called after installation completed successfully

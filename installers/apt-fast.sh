@@ -14,7 +14,7 @@ apt-fast_pre_install() {
 # Called after pre-install phase completed successfully
 # Installation phase, usually via package manager installation or manual download...
 apt-fast_install() {
-  sudo apt-get install apt-fast
+  sudo apt-get -y install apt-fast
 }
 
 # Called after installation completed successfully
