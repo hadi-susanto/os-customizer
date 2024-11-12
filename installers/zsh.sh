@@ -20,6 +20,11 @@ zsh_install() {
 # Called after installation completed successfully
 # Post installation may contains user interactive session
 zsh_post_install() {
-  chsh -s $(which zsh)
+  echo -e "\nChanging current shell ($SHELL) to zsh ($(which zsh)"
+  if [[ -z "${SUDO_USER}" ]]; then
+    chsh -s $(which zsh) $SUDO_USER
+  else
+    chsh -s $(which zsh)
+  fi
 }
 

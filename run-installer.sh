@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Detect whether we run with root privilege or not, installers script need to run with root privilege
+if [[ "$EUID" -ne 0 ]]; then
+  echo "$0 need root privilege to run, please execute 'sudo $0'"
+
+  exit 1
+fi
+
+
 # Define the installers path
 directory="installers"
 
@@ -157,20 +165,21 @@ start_installation() {
   fi
 
   # All required installer interface found, start installation process...
-  echo "Description:"
+  echo -e "\nDescription:"
   ${name}_describe
-  echo # Intentional blank line
-  echo "Installing..."
+  echo -e "\nExecute pre-install..."
   if ! ${name}_pre_install; then
     echo "'$installer' pre-install phase failed! please check for any error messages"
 
     return 1
   fi
+  echo -e "\nExecute install..."
   if ! ${name}_install; then
     echo "'$installer' installation phase failed! please check for any error messages"
 
     return 1
   fi
+  echo -e "\nExecute post-install..."
   if ! ${name}_post_install; then
     echo "'$installer' post-install phase failed, but the app itself installed successfully! please check for any error messages"
 
@@ -200,7 +209,7 @@ for choice in "${user_choices[@]}"; do
   # Add failed installer to list, we will print it later once all installer done
   failed_installers+=("$installer")
   # Let user to see any error messages before continuing
-  echo "Fail to install $installer, please read any error messages above and report it." >&2
+  echo "Fail to install $installer, please read any error messages above and report it."
   echo # Intentional blank line
 done
 
