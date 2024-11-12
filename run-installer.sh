@@ -17,12 +17,20 @@ file_names=()
 # Loop through all .sh files in the directory
 for file in "$directory"/*.sh; do
   # Check if it is a file (not a directory) and ensure the file exists
-  if [[ -f "$file" ]]; then
-    # Remove the directory path and file extension
-    file_name=$(basename "$file" .sh)
-    # Add the file name (without extension) to the array
-    file_names+=("$file_name")
+  if ! [[ -f "$file" ]]; then
+    continue
   fi
+
+  # Remove the directory path and file extension
+  file_name=$(basename "$file" .sh)
+
+  # Skip template
+  if [[ "$file_name" == "template" ]]; then
+    continue
+  fi
+
+  # Add the file name (without extension) to the array
+  file_names+=("$file_name")
 done
 
 # Check if the array is empty
@@ -40,9 +48,9 @@ while true; do
   clear
 
   # Display OS Customizer header
-  echo "------------------------"
-  echo " OS Customizer Installer"
-  echo "------------------------"
+  echo "------------------------------------------------"
+  echo " OS Customizer Package Installer"
+  echo "------------------------------------------------"
   
   # Print available installers
   index=1
