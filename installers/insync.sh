@@ -16,7 +16,11 @@ insync_pre_install() {
 # Called after pre-install phase completed successfully
 # Installation phase, usually via package manager installation or manual download...
 insync_install() {
-  sudo apt-get install insync
+  if command -v apt-fast 2>&1 > /dev/null; then
+    sudo apt-fast -y install insync
+  else
+    sudo apt-get -y install insync
+  fi
 }
 
 # Called after installation completed successfully
@@ -28,8 +32,18 @@ insync_post_install() {
 # Optional function / method
 # Called after all installers successfuly installed. Used to inform user action once activity done.
 insync_post_install_message() {
-  echo "insync have File Manager helper to put badges in your file as sync status indicator."
-  echo "It wasn't really useful so it wasn't installed by default, manual installation is required."
-  echo "Nemo File Manager: sudo apt-get install insync-nemo"
+  cat << EOF
+FYI: insync have additional app as file manager helper, this app will add badge to your
+file manager to indicate sync status. This app is vary based on File Managers.
+
+Supported File Manager:
+- Caja:     sudo apt-get install insync-caja
+- Dolphin:  sudo apt-get install insync-dolphin
+- Nautilus: sudo apt-get install insync-nautilus
+- Nemo:     sudo apt-get install insync-nemo
+- Thunar:   sudo apt-get install insync-thunar
+
+More info visit: https://www.insynchq.com/downloads/linux
+EOF
 }
 

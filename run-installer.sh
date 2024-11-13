@@ -234,6 +234,9 @@ for installer in "${selected_installers[@]}"; do
 done
 
 # Print any post install message if any
+echo "------------------------------------------------------------------------------"
+echo "OS Customizer Package Installer have completed installations..."
+echo "------------------------------------------------------------------------------"
 for installer in "${success_installers[@]}"; do
   if ! declare -F "${installer}_post_install_message" > /dev/null; then
     continue;
