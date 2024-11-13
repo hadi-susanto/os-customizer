@@ -141,7 +141,7 @@ fi
 
 # Helper function to start installation
 start_installation() {
-  # Alias variable name for easier scripting
+  # Alias function parameter to variable installer for easier scripting
   installer=$1
 
   # Installation header
@@ -179,21 +179,21 @@ start_installation() {
 
   # All required installer interface found, start installation process...
   echo -e "\nDescription:"
-  ${name}_describe
+  ${installer}_describe
   echo -e "\nExecute pre-install..."
-  if ! ${name}_pre_install; then
+  if ! ${installer}_pre_install; then
     echo "'$installer' pre-install phase failed! please check for any error messages"
 
     return 1
   fi
   echo -e "\nExecute install..."
-  if ! ${name}_install; then
+  if ! ${installer}_install; then
     echo "'$installer' installation phase failed! please check for any error messages"
 
     return 1
   fi
   echo -e "\nExecute post-install..."
-  if ! ${name}_post_install; then
+  if ! ${installer}_post_install; then
     echo "'$installer' post-install phase failed, but the app itself installed successfully! please check for any error messages"
 
     return 1
@@ -249,8 +249,8 @@ fi
 # Found some failed installer, just print to users
 index=1
 echo "All selected installers have been executed, unfortunately some installer(s) is failed:"
-for name in "${failed_installers[@]}"; do
-  echo "$index. $name"
+for installer in "${failed_installers[@]}"; do
+  echo "$index. $installer"
   ((index++))
 done
 
