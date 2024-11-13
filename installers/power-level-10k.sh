@@ -45,8 +45,8 @@ power-level-10k_pre_install() {
 
     return 1
   fi
-  # No need to download resources, we already copy required resources to our repository
 
+  # No need to download resources, we already copy required resources to our repository
   return 0
 }
 
@@ -107,8 +107,9 @@ power-level-10k_post_install() {
 # Called after all installers successfuly installed. Used to inform user action once activity done.
 power-level-10k_post_install_message() {
   cat <<EOF
-You may need to re-launch your terminal to trigger power-level-10k configuration wizard.
-If the wizard wasn't triggered, then you can force by calling 'p10k configure'
+* You may need to re-launch your terminal to trigger power-level-10k configuration wizard.
+* If the wizard wasn't triggered, then you can force by calling 'p10k configure'
+* Don't forget to setup Font settings to 'Inconsolota Nerd Mono Font Regular' size 11
 EOF
 }
 
