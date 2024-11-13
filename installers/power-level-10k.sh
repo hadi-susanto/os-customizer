@@ -87,12 +87,11 @@ power-level-10k_install() {
     echo "'source $theme' found in '$PL10K_DOT_ZSHRC', didn't touching .zshrc"
   else
     echo "Add 'source $theme' to '$PL10K_DOT_ZSHRC'"
-    cat << EOF
+    cat>>$PL10K_DOT_ZSHRC <<EOF
 
 # Added by OS Customizer power-level-10k.sh installer script script
 source $theme
 EOF
-    echo "source $theme" >> $PL10K_DOT_ZSHRC
   fi
 
   return 0
