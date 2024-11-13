@@ -76,11 +76,11 @@ while true; do
   fi
 
   # Prompt for user input
-  echo -n "Please enter [1-${#file_names[@]}/(a)ll/(q)uit]: "
+  echo -n "Please enter [1-${#file_names[@]}/(a)ll/(d)one]: "
   read -r user_input
   
-  # Break the loop if the user enters 'q' or 'quit'
-  if [[ "$user_input" == "q" || "$user_input" == "quit" ]]; then
+  # Break the loop if the user enters 'd' or 'done'
+  if [[ "$user_input" == "d" || "$user_input" == "done" ]]; then
     break
   fi
 
@@ -142,11 +142,11 @@ fi
 # Helper function to start installation
 start_installation() {
   # Alias variable name for easier scripting
-  name=$1
+  installer=$1
 
   # Installation header
   echo "----------------------------------------------------"
-  echo "Begin '$name' installation"
+  echo "Begin '$installer' installation"
   echo "----------------------------------------------------"
 
   # Load installer script
@@ -156,23 +156,23 @@ start_installation() {
 
   # Validating sourced script
   echo "Done, begin installer validation..."
-  if ! declare -F "${name}_describe" > /dev/null; then
-    echo "Can't found '${name}_describe' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
+  if ! declare -F "${installer}_describe" > /dev/null; then
+    echo "Can't found '${installer}_describe' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
 
     return 1
   fi
-  if ! declare -F "${name}_pre_install" > /dev/null; then
-    echo "Can't found '${name}_pre_install' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
+  if ! declare -F "${installer}_pre_install" > /dev/null; then
+    echo "Can't found '${installer}_pre_install' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
 
     return 1
   fi
-  if ! declare -F "${name}_install" > /dev/null; then
-    echo "Can't found '${name}_install' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
+  if ! declare -F "${installer}_install" > /dev/null; then
+    echo "Can't found '${installer}_install' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
 
     return 1
   fi
-  if ! declare -F "${name}_post_install" > /dev/null; then
-    echo "Can't found '${name}_post_install' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
+  if ! declare -F "${installer}_post_install" > /dev/null; then
+    echo "Can't found '${installer}_post_install' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
 
     return 1
   fi
@@ -208,13 +208,16 @@ start_installation() {
 # Clear the screen before we start with installation
 clear
 
-# Store any failed installer here
+# Track success / failed installation
+success_installers=()
 failed_installers=()
 
 # Execute selected installers
 for choice in "${user_choices[@]}"; do
   installer=${file_names[choice-1]}
   if start_installation $installer; then
+    success_installers+=("$installer")
+
     continue
   fi
   
@@ -223,6 +226,17 @@ for choice in "${user_choices[@]}"; do
   failed_installers+=("$installer")
   # Let user to see any error messages before continuing
   echo "Fail to install $installer, please read any error messages above and report it."
+  echo # Intentional blank line
+done
+
+# Print any post install message if any
+for installer in "${success_installers[@]}"; do
+  if ! declare -F "${installer}_post_install_message" > /dev/null; then
+    continue;
+  fi
+
+  echo "'$installer' post install message:"
+  ${installer}_post_install_message
   echo # Intentional blank line
 done
 

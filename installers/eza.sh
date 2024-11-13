@@ -16,7 +16,11 @@ eza_pre_install() {
 # Called after pre-install phase completed successfully
 # Installation phase, usually via package manager installation or manual download...
 eza_install() {
-  sudo apt-get install eza
+  if command -v apt-fast 2>&1 > /dev/null; then
+    sudo apt-fast -y install eza
+  else
+    sudo apt-get -y install eza
+  fi
 }
 
 # Called after installation completed successfully

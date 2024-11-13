@@ -11,8 +11,7 @@ fi
 
 for plugin in ${PLUGINS[@]}
 do
-  if command -v $plugin 2>&1 > /dev/null
-  then
+  if command -v $plugin 2>&1 > /dev/null; then
     source "$OS_CUSTOMIZER_BASE_PATH/zsh/$plugin.zsh-theme"
   else
     echo "Skip loading plugin: $plugin (required executable not available)"
