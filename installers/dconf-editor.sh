@@ -1,14 +1,14 @@
 #!/bin/bash
 
+# Short and meaningful installer description, describing the app being installed.
+dconf-editor_description() {
+  echo "DRAGON AHEAD: dconf-editor capable to edit system variables, use carefully"
+}
+
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
 dconf-editor_installed() {
   command -v dconf-editor 2>&1 > /dev/null
-}
-
-# Short and meaningful installer description, describing the app being installed.
-dconf-editor_describe() {
-  echo "DRAGON AHEAD: dconf-editor capable to edit system variables, use carefully"
 }
 
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
@@ -36,7 +36,7 @@ dconf-editor_post_install() {
 # Optional function / method
 # Called after all installers successfuly installed. Used to inform user action once activity done.
 dconf-editor_post_install_message() {
-  cat << EOF
+  cat <<EOF
 TIPS:
 * For battery settings: /org/cinnamon/settings-daemon/plugins/power/
 EOF

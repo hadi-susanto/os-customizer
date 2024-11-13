@@ -13,6 +13,11 @@ else
   PL10K_DOT_ZSHRC="/home/$SUDO_USER/.zshrc"
 fi
 
+# Short and meaningful installer description, describing the app being installed.
+power-level-10k_description() {
+  echo "Highly configurable zsh theme with icons, well productivity come with good Console UI"
+}
+
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
 power-level-10k_installed() {
@@ -23,11 +28,6 @@ power-level-10k_installed() {
   fi
 
   return 1
-}
-
-# Short and meaningful installer description, describing the app being installed.
-power-level-10k_describe() {
-  echo "Highly configurable zsh theme with icons, well productivity come with good Console UI"
 }
 
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
@@ -106,7 +106,7 @@ power-level-10k_post_install() {
 # Optional function / method
 # Called after all installers successfuly installed. Used to inform user action once activity done.
 power-level-10k_post_install_message() {
-  cat << EOF
+  cat <<EOF
 You may need to re-launch your terminal to trigger power-level-10k configuration wizard.
 If the wizard wasn't triggered, then you can force by calling 'p10k configure'
 EOF

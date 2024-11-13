@@ -1,14 +1,14 @@
 #!/bin/bash
 
+# Short and meaningful installer description, describing the app being installed.
+dnscrypt-proxy_description() {
+  echo "DNS over HTTPS client, skip your goverment cencorship"
+}
+
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
 dnscrypt-proxy_installed() {
   command -v dnscrypt-proxy 2>&1 > /dev/null
-}
-
-# Short and meaningful installer description, describing the app being installed.
-dnscrypt-proxy_describe() {
-  echo "DNS over HTTPS client, skip your goverment cencorship"
 }
 
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
@@ -36,7 +36,7 @@ dnscrypt-proxy_post_install() {
 # Optional function / method
 # Called after all installers successfuly installed. Used to inform user action once activity done.
 dnscrypt-proxy_post_install_message() {
-  cat << EOF
+  cat <<EOF
 TIPS:
 * Please check where dnscrypt-proxy listening by execute cat /lib/systemd/system/dnscrypt-proxy.socket, look for ListenStream and ListenDatagram value.
 * Open your network configuration and choose Automatic (DHCP) addresses only.

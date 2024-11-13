@@ -1,14 +1,14 @@
 #!/bin/bash
 
+# Short and meaningful installer description, describing the app being installed.
+insync_description() {
+  echo "Sync your OneDrive, Google Drive with insync (Cloud Storage Client)"
+}
+
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
 insync_installed() {
   command -v insync 2>&1 > /dev/null
-}
-
-# Short and meaningful installer description, describing the app being installed.
-insync_describe() {
-  echo "Sync your OneDrive, Google Drive with insync (Cloud Storage Client)"
 }
 
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
@@ -38,7 +38,7 @@ insync_post_install() {
 # Optional function / method
 # Called after all installers successfuly installed. Used to inform user action once activity done.
 insync_post_install_message() {
-  cat << EOF
+  cat <<EOF
 FYI: insync have additional app as file manager helper, this app will add badge to your
 file manager to indicate sync status. This app is vary based on File Managers.
 

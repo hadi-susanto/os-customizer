@@ -1,16 +1,16 @@
 #!/bin/bash
 
+# Short and meaningful installer description, describing the app being installed.
+zsh_description() {
+  echo "zsh is bash replacement, it's offer more feature compared to bash."
+}
+
+
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
 zsh_installed() {
   command -v zsh 2>&1 > /dev/null
 }
-
-# Short and meaningful installer description, describing the app being installed.
-zsh_describe() {
-  echo "zsh is bash replacement, it's offer more feature compared to bash."
-}
-
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
 # It's recommended to use pre-install phase to prepare installation instead at install phase
 zsh_pre_install() {

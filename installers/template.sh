@@ -1,37 +1,31 @@
 #!/bin/bash
 
-# Check whether app already installed or not, checking can be easily done by "command" function
-# to check command existence.
-apt-fast_installed() {
-  command -v apt-fast 2>&1 > /dev/null
+# Short and meaningful installer description, describing the app being installed.
+template_description() {
+  echo "Description app being installed, can have long description"
 }
 
-# Short and meaningful installer description, describing the app being installed.
-apt-fast_describe() {
-  echo "Description of apt-fast installation and configuration"
+# Check whether app already installed or not, checking can be easily done by "command" function
+# to check command existence.
+template_installed() {
+  command -v template 2>&1 > /dev/null
 }
 
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
 # It's recommended to use pre-install phase to prepare installation instead at install phase
-apt-fast_pre_install() {
-  echo "apt-fast_pre_install called"
-
+template_pre_install() {
   return 0
 }
 
 # Called after pre-install phase completed successfully
 # Installation phase, usually via package manager installation or manual download...
-apt-fast_install() {
-  echo "apt-fast_manual_install called"
-
+template_install() {
   return 0
 }
 
 # Called after installation completed successfully
 # Post installation may contains user interactive session
-apt-fast_post_install() {
-  echo "apt-fast_post_install called"
-
+template_post_install() {
   return 0
 }
 

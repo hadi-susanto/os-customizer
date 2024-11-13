@@ -171,8 +171,8 @@ start_installation() {
 
     return 1
   fi
-  if ! declare -F "${installer}_describe" > /dev/null; then
-    echo "Can't found '${installer}_describe' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
+  if ! declare -F "${installer}_description" > /dev/null; then
+    echo "Can't found '${installer}_description' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
 
     return 1
   fi
@@ -201,7 +201,7 @@ start_installation() {
 
   # All required installer interface found, start installation process...
   echo "Description:"
-  ${installer}_describe
+  ${installer}_description
   echo -e "\nExecute pre-install..."
   if ! ${installer}_pre_install; then
     echo "'$installer' pre-install phase failed! please check for any error messages"

@@ -1,15 +1,17 @@
 #!/bin/bash
 
+# Short and meaningful installer description, describing the app being installed.
+cryptomator_description() {
+  cat <<EOF
+Store your private file securely even without disk encryption!
+Encryption done per file basis, don't need to create a dedicated secured container.
+EOF
+}
+
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
 cryptomator_installed() {
   command -v cryptomator 2>&1 > /dev/null
-}
-
-# Short and meaningful installer description, describing the app being installed.
-cryptomator_describe() {
-  echo "Store your private file securely even without disk encryption!"
-  echo "Encryption done per file basis, don't need to create a dedicated secured container."
 }
 
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
