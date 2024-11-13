@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check whether app already installed or not, checking can be easily done by "command" function
+# to check command existence.
+apt-fast_installed() {
+  command -v dnscrypt-proxy 2>&1 > /dev/null
+}
+
 # Short and meaningful installer description, describing the app being installed.
 dnscrypt-proxy_describe() {
   echo "DNS over HTTPS client, skip your goverment cencorship"

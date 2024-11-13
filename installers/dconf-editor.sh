@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check whether app already installed or not, checking can be easily done by "command" function
+# to check command existence.
+apt-fast_installed() {
+  command -v dconf-editor 2>&1 > /dev/null
+}
+
 # Short and meaningful installer description, describing the app being installed.
 dconf-editor_describe() {
   echo "DRAGON AHEAD: dconf-editor capable to edit system variables, use carefully"

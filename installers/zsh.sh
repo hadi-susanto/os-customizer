@@ -1,5 +1,11 @@
 #!/bin/zsh
 
+# Check whether app already installed or not, checking can be easily done by "command" function
+# to check command existence.
+apt-fast_installed() {
+  command -v zsh 2>&1 > /dev/null
+}
+
 # Short and meaningful installer description, describing the app being installed.
 zsh_describe() {
   echo "zsh is bash replacement, it's offer more feature compared to bash."
