@@ -1,23 +1,29 @@
 #!/bin/bash
 
-# Detect whether we run with root privilege or not, installers script may need to run with root privilege
-if [[ "$EUID" -ne 0 ]]; then
+# Function to detect whether we run with root privilege or not.
+# Installers script may need to run with root privilege.
+detect_root_privileges() {
+  if [[ "$EUID" -eq 0 ]]; then
+    return 0
+  fi
+
   echo "WARNING: running on non root privilege !"
   echo "OS Customizer Package Installer itself didn't require root privilege,"
   echo "but individual installer may require root privilege for execution."
   echo # Intentional blank line
   echo "Depending on installer script you may be asked for root password while installing."
   echo "To prevent entering root password while installing please re-run with 'sudo $0'"
-  echo -n "Press Enter to continue or Ctrl + C to abort."
-  read -r
   echo # Intentional blank line
-fi
+  echo "Press Ctrl + C in case you want to abort and re-run."
+  echo # Intentional blank line
+}
 
 # Define the installers path
 directory="installers"
 
 # Initialize an empty array to store .sh file names without extension
 file_names=()
+
 
 # Loop through all .sh files in the directory
 for file in "$directory"/*.sh; do
@@ -56,12 +62,13 @@ while true; do
   echo "------------------------------------------------"
   echo " OS Customizer Package Installer"
   echo "------------------------------------------------"
-  
+  detect_root_privileges
+
   # Print available installers
   index=1
   echo "Available installer(s):"
   for name in "${file_names[@]}"; do
-    echo "$index. $name"
+    printf "%4d. %s\n" $index $name
     ((index++))
   done
   echo # Blank line after the list
@@ -71,7 +78,7 @@ while true; do
     index=1
     echo "Already selected installers:"
     for choice in "${selected_installers[@]}"; do
-      echo "$index. $choice"
+      printf "%4d. %s\n" $index $choice
       ((index++))
     done
     echo # Blank line after the list
@@ -130,16 +137,16 @@ fi
 echo -e "\nYou have selected the following installers:"
 index=1
 for choice in "${selected_installers[@]}"; do
-  echo "$index. $choice"
+  printf "%4d. %s\n" $index $choice
   ((index++))
 done
 echo # Blank line after the list
 
-echo -n "Do you want to execute these installers? (y/N): "
+echo -n "Do you want to execute these installers? (Y/n): "
 read -r confirm
 
 # Guard clause: Exit if the user does not confirm
-if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
+if [[ "$confirm" != "y" && "$confirm" != "Y" && "$confirm" != "" ]]; then
   echo "Installation canceled."
   exit 1
 fi
@@ -156,11 +163,9 @@ start_installation() {
 
   # Load installer script
   script_path="$directory/$1.sh"
-  echo -e "\nSourcing '$script_path'..."
   source "$script_path"
 
   # Validating sourced script
-  echo "Done, begin installer validation..."
   if ! declare -F "${installer}_installed" > /dev/null; then
     echo "Can't found '${installer}_installed' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
 
@@ -195,7 +200,7 @@ start_installation() {
   fi
 
   # All required installer interface found, start installation process...
-  echo -e "\nDescription:"
+  echo "Description:"
   ${installer}_describe
   echo -e "\nExecute pre-install..."
   if ! ${installer}_pre_install; then
@@ -217,7 +222,6 @@ start_installation() {
   fi
 
   echo "'$installer' installation done, please enjoy."
-  echo # Intentional blank line
 
   return 0
 }
@@ -233,6 +237,7 @@ failed_installers=()
 for installer in "${selected_installers[@]}"; do
   if start_installation $installer; then
     success_installers+=("$installer")
+    echo # Intentional blank line
 
     continue
   fi
@@ -269,7 +274,7 @@ fi
 index=1
 echo "All selected installers have been executed, unfortunately some installer(s) is failed:"
 for installer in "${failed_installers[@]}"; do
-  echo "$index. $installer"
+  printf "%4d. %s\n" $index $installer
   ((index++))
 done
 

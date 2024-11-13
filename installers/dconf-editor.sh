@@ -20,7 +20,11 @@ dconf-editor_pre_install() {
 # Called after pre-install phase completed successfully
 # Installation phase, usually via package manager installation or manual download...
 dconf-editor_install() {
-  sudo apt-get -y install dconf-editor
+  if command -v apt-fast 2>&1 > /dev/null; then
+    sudo apt-fast -y install dconf-editor
+  else
+    sudo apt-get -y install dconf-editor
+  fi
 }
 
 # Called after installation completed successfully
