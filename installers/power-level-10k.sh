@@ -2,11 +2,13 @@
 
 # global variable with prefix
 if [[ -z "$PL10K_INSTALL_DIR" ]]; then
+  # Unless defined we will assume power-level-10 cloned as our directory siblings
   PL10K_INSTALL_DIR=$(readlink -f "$PWD/../power-level-10k")
 fi
 
 if [[ -z "${SUDO_USER}" ]]; then
-  PL10K_DOT_ZSHRC=$(realpath -e ~/.zshrc)
+  # Looking current user home folder
+  PL10K_DOT_ZSHRC="$(realpath -e ~)/.zshrc"
 else
   PL10K_DOT_ZSHRC="/home/$SUDO_USER/.zshrc"
 fi
@@ -34,7 +36,7 @@ power-level-10k_pre_install() {
   # Ensure zsh intalled
   if ! command -v zsh 2>&1 > /dev/null; then
     echo "power-level-10k is zsh theme, please install zsh first! when using all or recommended option, please re-run again once zsh configured."
-    
+
     return 1
   fi
   # Ensure zsh configured
@@ -54,14 +56,14 @@ power-level-10k_install() {
   if [[ -d "/usr/share/fonts/truetype/inconsolata" ]]; then
     echo "'/usr/share/fonts/truetype/inconsolata' found, skipping font installation"
   else
-    echo "'/usr/share/fonts/truetype/inconsolata' found or not an folder, copying font..."
+    echo "'/usr/share/fonts/truetype/inconsolata' not found or not an folder, copying font..."
 
-    sudo mkdir /usr/share/fonts/truetype/inconsolata
-    temp_dir=$(mktemp -d)
-    unzip "$PWD/resources/Inconsolata.zip" -d "$temp_dir/inconsolata"
-    sudo cp -v "$temp_dir/inconsolata/*.ttf" "/usr/share/fonts/truetype/inconsolata/"
-    fc-cache -f -v
-    rm -r $temp_dir
+    sudo mkdir /usr/share/fonts/truetype/inconsolata &&
+      temp_dir=$(mktemp -d) &&
+      unzip $PWD/resources/Inconsolata.zip -d $temp_dir/inconsolata &&
+      sudo cp -r -v $temp_dir/inconsolata/*.ttf /usr/share/fonts/truetype/inconsolata/ &&
+      fc-cache -f -v &&
+      rm -r $temp_dir
 
     echo "Inconsolata font copied successfully"
   fi

@@ -14,7 +14,7 @@ eza_describe() {
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
 # It's recommended to use pre-install phase to prepare installation instead at install phase
 eza_pre_install() {
-  curl -fsSL https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor --output /etc/apt/keyrings/eza-gierens.gpg &&
+  curl -fsSL https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --yes --dearmor --output /etc/apt/keyrings/eza-gierens.gpg &&
     echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/eza-gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/eza-gierens.list &&
     sudo apt-get update
 }
