@@ -60,10 +60,10 @@ power-level-10k_install() {
 
     sudo mkdir /usr/share/fonts/truetype/inconsolata &&
       temp_dir=$(mktemp -d) &&
-      unzip $PWD/resources/Inconsolata.zip -d $temp_dir/inconsolata &&
-      sudo cp -r -v $temp_dir/inconsolata/*.ttf /usr/share/fonts/truetype/inconsolata/ &&
-      fc-cache -f -v &&
-      rm -r $temp_dir
+        unzip $PWD/resources/Inconsolata.zip -d $temp_dir/inconsolata &&
+        sudo cp -r -v $temp_dir/inconsolata/*.ttf /usr/share/fonts/truetype/inconsolata/ &&
+        fc-cache -f -v &&
+        rm -r $temp_dir
 
     echo "Inconsolata font copied successfully"
   fi
