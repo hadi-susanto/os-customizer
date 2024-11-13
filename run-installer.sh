@@ -166,7 +166,6 @@ start_installation() {
 
     return 1
   fi
-  echo "Done, begin installer validation..."
   if ! declare -F "${installer}_describe" > /dev/null; then
     echo "Can't found '${installer}_describe' function, installer file don't comply with OS Customizer interface, please open issue for '$script_path'"
 
@@ -188,7 +187,7 @@ start_installation() {
     return 1
   fi
 
-  if ${installer}_installed && ! "$FORCE_INSTALL" == "true"; then
+  if (${installer}_installed) && ! "$FORCE_INSTALL" == "true"; then
     echo -e "\nSkipping '$installer' since it was already installed in your current machine."
     echo "To force (re-)install please export 'FORCE_INSTALL=true' environment variable."
 
