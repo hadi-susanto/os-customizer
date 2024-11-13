@@ -187,7 +187,7 @@ start_installation() {
     return 1
   fi
 
-  if (${installer}_installed) && ! "$FORCE_INSTALL" == "true"; then
+  if (${installer}_installed) && ! [ "$FORCE_INSTALL" == "true" ]; then
     echo -e "\nSkipping '$installer' since it was already installed in your current machine."
     echo "To force (re-)install please export 'FORCE_INSTALL=true' environment variable."
 
