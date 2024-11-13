@@ -2,7 +2,7 @@
 
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
-apt-fast_installed() {
+dnscrypt-proxy_installed() {
   command -v dnscrypt-proxy 2>&1 > /dev/null
 }
 

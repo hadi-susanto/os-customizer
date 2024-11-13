@@ -1,8 +1,8 @@
-#!/bin/zsh
+#!/bin/bash
 
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
-apt-fast_installed() {
+zsh_installed() {
   command -v zsh 2>&1 > /dev/null
 }
 

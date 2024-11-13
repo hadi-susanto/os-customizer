@@ -2,7 +2,7 @@
 
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
-apt-fast_installed() {
+terminator_installed() {
   command -v terminator 2>&1 > /dev/null
 }
 

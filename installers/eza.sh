@@ -2,7 +2,7 @@
 
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
-apt-fast_installed() {
+eza_installed() {
   command -v eza 2>&1 > /dev/null
 }
 
