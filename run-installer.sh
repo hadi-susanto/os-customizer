@@ -45,7 +45,7 @@ if [ ${#file_names[@]} -eq 0 ]; then
 fi
 
 # Initialize an empty array to store valid user choices
-user_choices=()
+selected_installers=()
 
 # Loop to prompt the user for input
 while true; do
@@ -67,10 +67,12 @@ while true; do
   echo # Blank line after the list
 
   # Print a list of already selected installers
-  if [ ${#user_choices[@]} -gt 0 ]; then
+  if [ ${#selected_installers[@]} -gt 0 ]; then
+    index=1
     echo "Already selected installers:"
-    for choice in "${user_choices[@]}"; do
-      echo "- ${file_names[choice-1]}"
+    for choice in "${selected_installers[@]}"; do
+      echo "$index. $choice"
+      ((index++))
     done
     echo # Blank line after the list
   fi
@@ -79,6 +81,11 @@ while true; do
   echo -n "Please enter [1-${#file_names[@]}/(a)ll/(d)one]: "
   read -r user_input
   
+  # If user presses Enter without input, continue the loop
+  if [[ -z "$user_input" ]]; then
+    continue
+  fi
+  
   # Break the loop if the user enters 'd' or 'done'
   if [[ "$user_input" == "d" || "$user_input" == "done" ]]; then
     break
@@ -86,15 +93,8 @@ while true; do
 
   # Add all installers if the user enters 'all' and then break
   if [[ "$user_input" == "a" || "$user_input" == "all" ]]; then
-    for ((i=1; i<=${#file_names[@]}; i++)); do
-      user_choices+=("$i")
-    done
+    selected_installers=("${file_names[@]}")
     break
-  fi
-  
-  # If user presses Enter without input, continue the loop
-  if [[ -z "$user_input" ]]; then
-    continue
   fi
 
   # Validate user input is a number within the valid range
@@ -105,28 +105,33 @@ while true; do
     continue
   fi
 
+  # Convert user input to installer name
+  selected_installer="${file_names[user_input-1]}"
+
   # Check if the installer has already been selected
-  if [[ " ${user_choices[@]} " =~ " $user_input " ]]; then
-    echo "You have already selected this installer. Please choose a different one."
+  if [[ " ${selected_installers[@]} " =~ " $selected_installer " ]]; then
+    echo "'$selected_installer' already selected, please choose a different one or enter 'd' to complete selections."
     echo -n "Press Enter to continue..."
     read -r
     continue
   fi
 
   # Add the validated input to the list of choices
-  user_choices+=("$user_input")
+  selected_installers+=("$selected_installer")
 done
 
 # Guard clause: Exit if no installers were selected
-if [ ${#user_choices[@]} -eq 0 ]; then
+if [ ${#selected_installers[@]} -eq 0 ]; then
   echo "No installers selected. Exiting."
   exit 1
 fi
 
 # Confirm if the user wants to execute the selected installers
 echo -e "\nYou have selected the following installers:"
-for choice in "${user_choices[@]}"; do
-  echo "- ${file_names[choice-1]}"
+index=1
+for choice in "${selected_installers[@]}"; do
+  echo "$index. $choice"
+  ((index++))
 done
 echo # Blank line after the list
 
@@ -213,8 +218,7 @@ success_installers=()
 failed_installers=()
 
 # Execute selected installers
-for choice in "${user_choices[@]}"; do
-  installer=${file_names[choice-1]}
+for installer in "${selected_installers[@]}"; do
   if start_installation $installer; then
     success_installers+=("$installer")
 

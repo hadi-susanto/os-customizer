@@ -8,7 +8,7 @@ terminator_describe() {
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
 # It's recommended to use pre-install phase to prepare installation instead at install phase
 terminator_pre_install() {
-  sudo add-apt-repository ppa:mattrose/terminator && sudo apt-get update
+  sudo add-apt-repository -y ppa:mattrose/terminator && sudo apt-get update
 }
 
 # Called after pre-install phase completed successfully
