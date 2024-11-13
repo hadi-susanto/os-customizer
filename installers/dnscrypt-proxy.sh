@@ -30,6 +30,12 @@ dnscrypt-proxy_install() {
 # Called after installation completed successfully
 # Post installation may contains user interactive session
 dnscrypt-proxy_post_install() {
+  resolvconf_dead=$(systemctl status dnscrypt-proxy-resolvconf.service | grep "ConditionFileIsExecutable=/sbin/resolvconf was not met")
+  if [[ -n $resolvconf_dead ]]; then
+    echo "It seems dnscrypt-proxy-resolvconf fail to start because of missing /sbin/resolvconf, disabling it since we still can use socket."
+    sudo systemctl disable dnscrypt-proxy-resolvconf.service
+  fi
+
   return 0
 }
 

@@ -29,3 +29,12 @@ template_post_install() {
   return 0
 }
 
+# Optional to implements, this method called once all installation done
+# Useful to print informational message to users
+template_post_install_message() {
+  cat <<EOF
+Altough this method can be used for post install action once everything done,
+it's discouraged to be used in such case.
+EOF
+}
+

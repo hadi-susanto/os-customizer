@@ -5,7 +5,6 @@ zsh_description() {
   echo "zsh is bash replacement, it's offer more feature compared to bash."
 }
 
-
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
 zsh_installed() {
