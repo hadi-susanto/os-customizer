@@ -21,7 +21,7 @@ EOF
 # to check command existence.
 osc-zsh-enhancement_installed() {
   # Similar to power-level-10k detection is quite a hassle
-  if [[ -f "$OSC_DOT_ZSHRC" && -n $(grep "run \`p10k configure\`" $OSC_DOT_ZSHRC) ]]; then
+  if [[ -f "$OSC_DOT_ZSHRC" && -n $(grep "OS_CUSTOMIZER_BASE_PATH=" $OSC_DOT_ZSHRC) ]]; then
     return 0
   fi
 
@@ -38,8 +38,8 @@ osc-zsh-enhancement_pre_install() {
     return 1
   fi
   # Ensure zsh configured
-  if ! [[ -f "$PL10K_DOT_ZSHRC" ]]; then
-    echo "zsh installed but it haven't configured yet, missing .zshrc at $PL10K_DOT_ZSHRC"
+  if ! [[ -f "$OSC_DOT_ZSHRC" ]]; then
+    echo "zsh installed but it haven't configured yet, missing .zshrc at $OSC_DOT_ZSHRC"
 
     return 1
   fi

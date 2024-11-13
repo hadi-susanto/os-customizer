@@ -21,9 +21,9 @@ dnscrypt-proxy_pre_install() {
 # Installation phase, usually via package manager installation or manual download...
 dnscrypt-proxy_install() {
   if command -v apt-fast 2>&1 > /dev/null; then
-    sudo apt-fast -y install cryptomator
+    sudo apt-fast -y install dnscrypt-proxy
   else
-    sudo apt-get -y install cryptomator
+    sudo apt-get -y install dnscrypt-proxy
   fi
 }
 
