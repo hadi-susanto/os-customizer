@@ -6,6 +6,8 @@ directory="installers"
 file_names=()
 # Initialize an empty array to store valid user choices
 selected_installers=()
+# Recommended software / packages
+recommended_installers=(apt-fast bat cryptomator dnscrypt-proxy eza flameshot insync keepass-xc osc-zsh-enhancement power-level-10k terminator zsh)
 
 # Function to detect whether we run with root privilege or not.
 # Installers script may need to run with root privilege.
@@ -84,7 +86,7 @@ main_loop_user_input() {
     fi
 
     # Prompt for user input
-    echo -n "Please enter [1-${#file_names[@]}/(a)ll/(d)one]: "
+    echo -n "Please enter [1-${#file_names[@]}/(r)ecommended/(a)ll/(d)one]: "
     read -r user_input
     
     # If user presses Enter without input, continue the loop
@@ -100,6 +102,12 @@ main_loop_user_input() {
     # Add all installers if the user enters 'all' and then break
     if [[ "$user_input" == "a" || "$user_input" == "all" ]]; then
       selected_installers=("${file_names[@]}")
+      break
+    fi
+
+    # Add all recommended installer when user enter 'r' or 'recommended' and then break
+    if [[ "$user_input" == "r" || "$user_input" == "recommended" ]]; then
+      selected_installers=("${recommended_installers[@]}")
       break
     fi
 
