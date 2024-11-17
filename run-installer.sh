@@ -53,18 +53,18 @@ populate_installers() {
     fi
 
     # Skip template
-    if [[ $file == "template.sh" ]]; then
+    if [[ $file == "installers/template.sh" ]]; then
       continue
     fi
 
     # Try load installer
-    source "$1/$file"
+    source $file
     # Remove the directory path and file extension
     installer=$(basename "$file" .sh)
     # Validating sourced script
     required_methods=("${installer}_installed" "${installer}_description" "${installer}_pre_install" "${installer}_install" "${installer}_post_install")
     for method in "${required_methods[@]}"; do
-      if ! installer_method_exists "$1/$file" $method; then
+      if ! installer_method_exists $file $method; then
         continue
       fi
     done
@@ -75,8 +75,10 @@ populate_installers() {
   # Check if the array is empty
   if [ ${#file_names[@]} -eq 0 ]; then
     echo "No .sh installers found in the '$directory' directory."
-    exit 1
+    return 1
   fi
+
+  return 0
 }
 
 # Print list of any installers / selected installers with recommended indication
@@ -273,7 +275,7 @@ installation_loop() {
   if [ ${#failed_installers[@]} -eq 0 ]; then
     echo "All selected installers have been executed."
 
-    exit 0
+    return 0
   fi
 
   # Found some failed installer, just print to users
@@ -286,7 +288,10 @@ installation_loop() {
 }
 
 # Start main loop
-populate_installers $directory
+if ! populate_installers $directory; then
+  echo "Fail to load installer(s) please check above error messages if any..."
+  exit 1
+fi
 main_loop_user_input
 
 # Guard clause: Exit if no installers were selected
