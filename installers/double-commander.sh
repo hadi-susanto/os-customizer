@@ -18,7 +18,7 @@ double-commander_pre_install() {
   version=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_RELEASE | cut -d = -f 2)
   codename="xUbuntu_$version"
 
-  curl -fsSL "https://download.opensuse.org/repositories/home:Alexx2000/$codename/Release.key" | sudo gpg --dearmor --output /etc/apt/keyrings/double-commander.gpg &&
+  curl -fsSL "https://download.opensuse.org/repositories/home:Alexx2000/$codename/Release.key" | sudo gpg --yes --dearmor --output /etc/apt/keyrings/double-commander.gpg &&
     echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/double-commander.gpg] http://download.opensuse.org/repositories/home:/Alexx2000/$codename/ /" | sudo tee /etc/apt/sources.list.d/double-commander.list &&
     sudo apt-get update
 }

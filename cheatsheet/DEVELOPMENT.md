@@ -29,3 +29,13 @@ sudo chmod -x /etc/cron.daily/microsoft-edge
 ll /opt/microsoft/msedge/cron
 ```
 
+# `sdk` SDKMAN (Manage Java Development Kit)
+
+Reference:
+- [SDKMAN Page](https://sdkman.io/install/).
+
+```sh
+export SDKMAN_DIR="/usr/local/sdkman"
+curl -s "https://get.sdkman.io" | bash
+```
+

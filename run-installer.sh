@@ -19,7 +19,7 @@ WARNING: running on non root privilege ! This script doesn't need root privilege
 Installer may require root privilege for it's execution, you may be asked for root password
 unless re-run this script with root privilege. In case you want to run with root privilege:
 
-Ctrl + C, sudo $0
+Ctrl + C, sudo ./run-installer.sh
 
 EOF
 }
