@@ -10,6 +10,8 @@ selected_installers=()
 recommended_installers=(apt-fast bat cryptomator dnscrypt-proxy double-commander eza flameshot insync keepass-xc osc-zsh-enhancement power-level-10k terminator zsh)
 development_installers=(microsoft-edge sdkman)
 # ANSI colors (https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux)
+CYAN='\033[0;36m'
+LIGHT_BLUE='\033[1;34m'
 LIGHT_GREEN='\033[1;32m'
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
@@ -32,6 +34,16 @@ Ctrl + C, sudo ./run-installer.sh
 EOF
 }
 
+installer_method_exists() {
+  if declare -F "$2" > /dev/null; then
+    return 0
+  fi
+
+  echo "Can't found '$2' function, installer file don't comply with OS Customizer interface, please open issue for '$1'"
+
+  return 1
+}
+
 # Loop through all .sh files in the directory
 populate_installers() {
   for file in "$1"/*.sh; do
@@ -40,16 +52,24 @@ populate_installers() {
       continue
     fi
 
-    # Remove the directory path and file extension
-    file_name=$(basename "$file" .sh)
-
     # Skip template
-    if [[ "$file_name" == "template" ]]; then
+    if [[ $file == "template.sh" ]]; then
       continue
     fi
 
-    # Add the file name (without extension) to the array
-    file_names+=("$file_name")
+    # Try load installer
+    source "$1/$file"
+    # Remove the directory path and file extension
+    installer=$(basename "$file" .sh)
+    # Validating sourced script
+    required_methods=("${installer}_installed" "${installer}_description" "${installer}_pre_install" "${installer}_install" "${installer}_post_install")
+    for method in "${required_methods[@]}"; do
+      if ! installer_method_exists "$1/$file" $method; then
+        continue
+      fi
+    done
+    # Add the installer (without extension) to the array
+    file_names+=("$installer")
   done
 
   # Check if the array is empty
@@ -65,14 +85,17 @@ print_list() {
   list=("$@")
 
   for item in "${list[@]}"; do
-    printf "%4d. %s" $index $item
+    printf "%4d. %-20s" $index $item
     # Detect if current installer in recommended list
     if [[ " ${recommended_installers[@]} " =~ " $item " ]]; then
-      printf " ${LIGHT_GREEN}(recommended)${NC}"
+      printf "${LIGHT_GREEN}%-15s${NC}" "(recommended)"
     fi
     # Detect if current installer in development list
     if [[ " ${development_installers[@]} " =~ " $item " ]]; then
-      printf " ${YELLOW}(for-development-usage)${NC}"
+      printf "${YELLOW}%-15s${NC}" "(for-dev)"
+    fi
+    if [[ "${item}_installed" ]]; then
+      printf "${LIGHT_BLUE}%-15s${NC}" "(installed)"
     fi
     # Line break
     printf "\n"
@@ -153,16 +176,6 @@ main_loop_user_input() {
     # Add the validated input to the list of choices
     selected_installers+=("$selected_installer")
   done
-}
-
-installer_method_exists() {
-  if declare -F "$2" > /dev/null; then
-    return 0
-  fi
-
-  echo "Can't found '$2' function, installer file don't comply with OS Customizer interface, please open issue for '$1'"
-
-  return 1
 }
 
 # Helper function to start installation
