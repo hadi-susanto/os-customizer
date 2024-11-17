@@ -7,7 +7,13 @@ file_names=()
 # Initialize an empty array to store valid user choices
 selected_installers=()
 # Recommended software / packages
-recommended_installers=(apt-fast bat cryptomator dnscrypt-proxy eza flameshot insync keepass-xc osc-zsh-enhancement power-level-10k terminator zsh)
+recommended_installers=(apt-fast bat cryptomator dnscrypt-proxy double-commander eza flameshot insync keepass-xc osc-zsh-enhancement power-level-10k terminator zsh)
+development_installers=(microsoft-edge sdkman)
+# ANSI colors (https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux)
+LIGHT_GREEN='\033[1;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
 
 # Function to detect whether we run with root privilege or not.
 # Installers script may need to run with root privilege.
@@ -53,6 +59,30 @@ populate_installers() {
   fi
 }
 
+# Print list of any installers / selected installers with recommended indication
+print_list() {
+  index=1
+  list=("$@")
+
+  for item in "${list[@]}"; do
+    printf "%4d. %s" $index $item
+    # Detect if current installer in recommended list
+    if [[ " ${recommended_installers[@]} " =~ " $item " ]]; then
+      printf " ${LIGHT_GREEN}(recommended)${NC}"
+    fi
+    # Detect if current installer in development list
+    if [[ " ${development_installers[@]} " =~ " $item " ]]; then
+      printf " ${YELLOW}(for-development-usage)${NC}"
+    fi
+    # Line break
+    printf "\n"
+
+    ((index++))
+  done
+
+  echo # Blank line after the list
+}
+
 # Loop to prompt the user for input
 main_loop_user_input() {
   while true; do
@@ -66,23 +96,13 @@ main_loop_user_input() {
     detect_root_privileges
 
     # Print available installers
-    index=1
     echo "Available installer(s):"
-    for name in "${file_names[@]}"; do
-      printf "%4d. %s\n" $index $name
-      ((index++))
-    done
-    echo # Blank line after the list
+    # https://askubuntu.com/questions/674333/how-to-pass-an-array-as-function-argument
+    print_list "${file_names[@]}"
 
     # Print a list of already selected installers
     if [ ${#selected_installers[@]} -gt 0 ]; then
-      index=1
-      echo "Already selected installers:"
-      for choice in "${selected_installers[@]}"; do
-        printf "%4d. %s\n" $index $choice
-        ((index++))
-      done
-      echo # Blank line after the list
+      print_list "${selected_installers[@]}"
     fi
 
     # Prompt for user input
@@ -264,12 +284,7 @@ fi
 
 # Confirm if the user wants to execute the selected installers
 echo -e "\nYou have selected the following installers:"
-index=1
-for choice in "${selected_installers[@]}"; do
-  printf "%4d. %s\n" $index $choice
-  ((index++))
-done
-echo # Blank line after the list
+print_list "${selected_installers[@]}"
 
 echo -n "Do you want to execute these installers? (Y/n): "
 read -r confirm
