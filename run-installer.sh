@@ -7,7 +7,7 @@ file_names=()
 # Initialize an empty array to store valid user choices
 selected_installers=()
 # Recommended software / packages
-recommended_installers=(apt-fast bat cryptomator dnscrypt-proxy double-commander eza flameshot insync keepass-xc osc-zsh-enhancement power-level-10k terminator zsh)
+recommended_installers=(apt-fast bat cryptomator dnscrypt-proxy double-commander eza flameshot insync keepass-xc power-level-10k terminator zsh zsh-plugins)
 development_installers=(microsoft-edge sdkman)
 # ANSI colors (https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux)
 CYAN='\033[0;36m'
@@ -40,6 +40,7 @@ installer_method_exists() {
   fi
 
   echo "Can't found '$2' function, installer file don't comply with OS Customizer interface, please open issue for '$1'"
+  echo
 
   return 1
 }
@@ -65,7 +66,7 @@ populate_installers() {
     required_methods=("${installer}_installed" "${installer}_description" "${installer}_pre_install" "${installer}_install" "${installer}_post_install")
     for method in "${required_methods[@]}"; do
       if ! installer_method_exists $file $method; then
-        continue
+        return 1
       fi
     done
     # Add the installer (without extension) to the array
@@ -96,7 +97,7 @@ print_list() {
     if [[ " ${development_installers[@]} " =~ " $item " ]]; then
       printf "${YELLOW}%-15s${NC}" "(for-dev)"
     fi
-    if [[ "${item}_installed" ]]; then
+    if ("${item}_installed") then
       printf "${LIGHT_BLUE}%-15s${NC}" "(installed)"
     fi
     # Line break
@@ -127,6 +128,7 @@ main_loop_user_input() {
 
     # Print a list of already selected installers
     if [ ${#selected_installers[@]} -gt 0 ]; then
+      echo "Already selected installers:"
       print_list "${selected_installers[@]}"
     fi
 
