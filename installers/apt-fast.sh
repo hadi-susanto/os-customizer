@@ -26,6 +26,9 @@ apt-fast_install() {
 # Called after installation completed successfully
 # Post installation may contains user interactive session
 apt-fast_post_install() {
+  sudo cp ./zsh/_apt-fast /usr/share/zsh/functions/Completion/Debian/_apt-fast &&
+    sudo chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
+
   return 0
 }
 

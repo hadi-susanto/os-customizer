@@ -6,6 +6,16 @@ directory="installers"
 file_names=()
 # Initialize an empty array to store valid user choices
 selected_installers=()
+# Recommended software / packages
+recommended_installers=(apt-fast bat cryptomator dnscrypt-proxy double-commander eza flameshot insync keepass-xc osc-zsh-enhancement power-level-10k terminator zsh)
+development_installers=(microsoft-edge sdkman)
+# ANSI colors (https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux)
+CYAN='\033[0;36m'
+LIGHT_BLUE='\033[1;34m'
+LIGHT_GREEN='\033[1;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
 
 # Function to detect whether we run with root privilege or not.
 # Installers script may need to run with root privilege.
@@ -19,9 +29,19 @@ WARNING: running on non root privilege ! This script doesn't need root privilege
 Installer may require root privilege for it's execution, you may be asked for root password
 unless re-run this script with root privilege. In case you want to run with root privilege:
 
-Ctrl + C, sudo $0
+Ctrl + C, sudo ./run-installer.sh
 
 EOF
+}
+
+installer_method_exists() {
+  if declare -F "$2" > /dev/null; then
+    return 0
+  fi
+
+  echo "Can't found '$2' function, installer file don't comply with OS Customizer interface, please open issue for '$1'"
+
+  return 1
 }
 
 # Loop through all .sh files in the directory
@@ -32,23 +52,60 @@ populate_installers() {
       continue
     fi
 
-    # Remove the directory path and file extension
-    file_name=$(basename "$file" .sh)
-
     # Skip template
-    if [[ "$file_name" == "template" ]]; then
+    if [[ $file == "installers/template.sh" ]]; then
       continue
     fi
 
-    # Add the file name (without extension) to the array
-    file_names+=("$file_name")
+    # Try load installer
+    source $file
+    # Remove the directory path and file extension
+    installer=$(basename "$file" .sh)
+    # Validating sourced script
+    required_methods=("${installer}_installed" "${installer}_description" "${installer}_pre_install" "${installer}_install" "${installer}_post_install")
+    for method in "${required_methods[@]}"; do
+      if ! installer_method_exists $file $method; then
+        continue
+      fi
+    done
+    # Add the installer (without extension) to the array
+    file_names+=("$installer")
   done
 
   # Check if the array is empty
   if [ ${#file_names[@]} -eq 0 ]; then
     echo "No .sh installers found in the '$directory' directory."
-    exit 1
+    return 1
   fi
+
+  return 0
+}
+
+# Print list of any installers / selected installers with recommended indication
+print_list() {
+  index=1
+  list=("$@")
+
+  for item in "${list[@]}"; do
+    printf "%4d. %-20s" $index $item
+    # Detect if current installer in recommended list
+    if [[ " ${recommended_installers[@]} " =~ " $item " ]]; then
+      printf "${LIGHT_GREEN}%-15s${NC}" "(recommended)"
+    fi
+    # Detect if current installer in development list
+    if [[ " ${development_installers[@]} " =~ " $item " ]]; then
+      printf "${YELLOW}%-15s${NC}" "(for-dev)"
+    fi
+    if [[ "${item}_installed" ]]; then
+      printf "${LIGHT_BLUE}%-15s${NC}" "(installed)"
+    fi
+    # Line break
+    printf "\n"
+
+    ((index++))
+  done
+
+  echo # Blank line after the list
 }
 
 # Loop to prompt the user for input
@@ -64,27 +121,17 @@ main_loop_user_input() {
     detect_root_privileges
 
     # Print available installers
-    index=1
     echo "Available installer(s):"
-    for name in "${file_names[@]}"; do
-      printf "%4d. %s\n" $index $name
-      ((index++))
-    done
-    echo # Blank line after the list
+    # https://askubuntu.com/questions/674333/how-to-pass-an-array-as-function-argument
+    print_list "${file_names[@]}"
 
     # Print a list of already selected installers
     if [ ${#selected_installers[@]} -gt 0 ]; then
-      index=1
-      echo "Already selected installers:"
-      for choice in "${selected_installers[@]}"; do
-        printf "%4d. %s\n" $index $choice
-        ((index++))
-      done
-      echo # Blank line after the list
+      print_list "${selected_installers[@]}"
     fi
 
     # Prompt for user input
-    echo -n "Please enter [1-${#file_names[@]}/(a)ll/(d)one]: "
+    echo -n "Please enter [1-${#file_names[@]}/(r)ecommended/(a)ll/(d)one]: "
     read -r user_input
     
     # If user presses Enter without input, continue the loop
@@ -100,6 +147,12 @@ main_loop_user_input() {
     # Add all installers if the user enters 'all' and then break
     if [[ "$user_input" == "a" || "$user_input" == "all" ]]; then
       selected_installers=("${file_names[@]}")
+      break
+    fi
+
+    # Add all recommended installer when user enter 'r' or 'recommended' and then break
+    if [[ "$user_input" == "r" || "$user_input" == "recommended" ]]; then
+      selected_installers=("${recommended_installers[@]}")
       break
     fi
 
@@ -125,16 +178,6 @@ main_loop_user_input() {
     # Add the validated input to the list of choices
     selected_installers+=("$selected_installer")
   done
-}
-
-installer_method_exists() {
-  if declare -F "$2" > /dev/null; then
-    return 0
-  fi
-
-  echo "Can't found '$2' function, installer file don't comply with OS Customizer interface, please open issue for '$1'"
-
-  return 1
 }
 
 # Helper function to start installation
@@ -232,7 +275,7 @@ installation_loop() {
   if [ ${#failed_installers[@]} -eq 0 ]; then
     echo "All selected installers have been executed."
 
-    exit 0
+    return 0
   fi
 
   # Found some failed installer, just print to users
@@ -245,7 +288,10 @@ installation_loop() {
 }
 
 # Start main loop
-populate_installers $directory
+if ! populate_installers $directory; then
+  echo "Fail to load installer(s) please check above error messages if any..."
+  exit 1
+fi
 main_loop_user_input
 
 # Guard clause: Exit if no installers were selected
@@ -256,12 +302,7 @@ fi
 
 # Confirm if the user wants to execute the selected installers
 echo -e "\nYou have selected the following installers:"
-index=1
-for choice in "${selected_installers[@]}"; do
-  printf "%4d. %s\n" $index $choice
-  ((index++))
-done
-echo # Blank line after the list
+print_list "${selected_installers[@]}"
 
 echo -n "Do you want to execute these installers? (Y/n): "
 read -r confirm

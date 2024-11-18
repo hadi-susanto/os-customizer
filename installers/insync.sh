@@ -14,6 +14,10 @@ insync_installed() {
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
 # It's recommended to use pre-install phase to prepare installation instead at install phase
 insync_pre_install() {
+  if [[ -f /etc/apt/sources.list.d/insync.list ]]; then
+    sudo rm /etc/apt/sources.list.d/insync.list
+  fi
+
   curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?search=0xACCAF35C&fingerprint=on&op=get" | sudo gpg --yes --dearmor --output /etc/apt/keyrings/insync.gpg &&
     echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/insync.gpg] http://apt.insync.io/mint $(lsb_release -c -s) non-free contrib" | sudo tee /etc/apt/sources.list.d/insync.list &&
     sudo apt-get update
