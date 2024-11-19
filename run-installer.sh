@@ -17,6 +17,12 @@ RED='\033[0;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+print_header() {
+  echo "------------------------------------------------------------------------------"
+  echo " Software Installer - $1"
+  echo "------------------------------------------------------------------------------"
+}
+
 # Function to detect whether we run with root privilege or not.
 # Installers script may need to run with root privilege.
 detect_root_privileges() {
@@ -116,9 +122,7 @@ main_loop_user_input() {
     clear
 
     # Display OS Customizer header
-    echo "------------------------------------------------------------------------------"
-    echo " OS Customizer Package Installer"
-    echo "------------------------------------------------------------------------------"
+    print_header "Choose Software Packages"
     detect_root_privileges
 
     # Print available installers
@@ -188,9 +192,7 @@ start_installation() {
   installer=$1
 
   # Installation header
-  echo "------------------------------------------------------------------------------"
-  echo "Begin '$installer' installation"
-  echo "------------------------------------------------------------------------------"
+  print_header "Installing $installer"
 
   # Load installer script
   script_path="$directory/$1.sh"
@@ -261,9 +263,7 @@ installation_loop() {
   done
 
   # Print any post install message if any
-  echo "------------------------------------------------------------------------------"
-  echo "OS Customizer Package Installer have completed installations..."
-  echo "------------------------------------------------------------------------------"
+  print_header "Installation completed"
   for installer in "${success_installers[@]}"; do
     if ! declare -F "${installer}_post_install_message" > /dev/null; then
       continue;
@@ -304,9 +304,7 @@ fi
 
 # Confirm if the user wants to execute the selected installers
 clear
-echo "------------------------------------------------------------------------------"
-echo " OS Customizer Package Installer - Installation Phase"
-echo "------------------------------------------------------------------------------"
+print_header "Installation Confirmation"
 echo "You have selected the following installers:"
 print_list "${selected_installers[@]}"
 
