@@ -116,9 +116,9 @@ main_loop_user_input() {
     clear
 
     # Display OS Customizer header
-    echo "------------------------------------------------"
+    echo "------------------------------------------------------------------------------"
     echo " OS Customizer Package Installer"
-    echo "------------------------------------------------"
+    echo "------------------------------------------------------------------------------"
     detect_root_privileges
 
     # Print available installers
@@ -188,9 +188,9 @@ start_installation() {
   installer=$1
 
   # Installation header
-  echo "----------------------------------------------------"
+  echo "------------------------------------------------------------------------------"
   echo "Begin '$installer' installation"
-  echo "----------------------------------------------------"
+  echo "------------------------------------------------------------------------------"
 
   # Load installer script
   script_path="$directory/$1.sh"
@@ -303,7 +303,11 @@ if [ ${#selected_installers[@]} -eq 0 ]; then
 fi
 
 # Confirm if the user wants to execute the selected installers
-echo -e "\nYou have selected the following installers:"
+clear
+echo "------------------------------------------------------------------------------"
+echo " OS Customizer Package Installer - Installation Phase"
+echo "------------------------------------------------------------------------------"
+echo "You have selected the following installers:"
 print_list "${selected_installers[@]}"
 
 echo -n "Do you want to execute these installers? (Y/n): "
