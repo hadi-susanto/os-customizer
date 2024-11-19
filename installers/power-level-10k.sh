@@ -1,6 +1,12 @@
 #!/bin/bash
 
 # global variable with prefix
+if [[ -z "$PL10K_NERD_FONT" ]]; then
+  # Unless defined we will use Inconsolata
+  PL10K_NERD_FONT="Inconsolata"
+fi
+PL10K_FONT_INSTALL_DIR="/usr/share/fonts/truetype/$PL10K_NERD_FONT"
+
 if [[ -z "$PL10K_INSTALL_DIR" ]]; then
   # Unless defined we will assume power-level-10 cloned as our directory siblings
   PL10K_INSTALL_DIR=$(readlink -f "$PWD/../power-level-10k")
@@ -12,6 +18,8 @@ if [[ -z "${SUDO_USER}" ]]; then
 else
   PL10K_DOT_ZSHRC="/home/$SUDO_USER/.zshrc"
 fi
+
+p10k_temp_folder=""
 
 # Short and meaningful installer description, describing the app being installed.
 power-level-10k_description() {
@@ -46,26 +54,21 @@ power-level-10k_pre_install() {
     return 1
   fi
 
-  # No need to download resources, we already copy required resources to our repository
-  return 0
+  power-level-10k_download_nerd_font
 }
 
 # Called after pre-install phase completed successfully
 # Installation phase, usually via package manager installation or manual download...
 power-level-10k_install() {
-  if [[ -d "/usr/share/fonts/truetype/inconsolata" ]]; then
-    echo "'/usr/share/fonts/truetype/inconsolata' found, skipping font installation"
-  else
-    echo "'/usr/share/fonts/truetype/inconsolata' not found or not an folder, copying font..."
+  if [[ -n $p10k_temp_folder && -f "$p10k_temp_folder/font.zip" ]]; then
+    echo "Found downloaded font, installing..."
 
-    sudo mkdir /usr/share/fonts/truetype/inconsolata &&
-      temp_dir=$(mktemp -d) &&
-        unzip $PWD/resources/Inconsolata.zip -d $temp_dir/inconsolata &&
-        sudo cp -r -v $temp_dir/inconsolata/*.ttf /usr/share/fonts/truetype/inconsolata/ &&
-        fc-cache -f -v &&
-        rm -r $temp_dir
+    sudo mkdir "$PL10K_FONT_INSTALL_DIR" &&
+        unzip "$p10k_temp_folder/font.zip" -d "$p10k_temp_folder/font" &&
+        sudo cp -r -v $p10k_temp_folder/font/*.ttf "$PL10K_FONT_INSTALL_DIR/" &&
+        fc-cache -f -v
 
-    echo "Inconsolata font copied successfully"
+    echo "$PL10K_NERD_FONT font copied successfully, font cache also updated"
   fi
 
   if [[ -d $PL10K_INSTALL_DIR ]]; then
@@ -93,14 +96,14 @@ power-level-10k_install() {
 source $theme
 EOF
   fi
-
-  return 0
 }
 
 # Called after installation completed successfully
 # Post installation may contains user interactive session
 power-level-10k_post_install() {
-  return 0
+  if [[ -n $p10k_temp_folder && -d $p10k_temp_folder ]]; then
+    rm -r $p10k_temp_folder
+  fi
 }
 
 # Optional function / method
@@ -111,5 +114,30 @@ power-level-10k_post_install_message() {
 * If the wizard wasn't triggered, then you can force by calling 'p10k configure'
 * Don't forget to setup Font settings to 'Inconsolota Nerd Mono Font Regular' size 11
 EOF
+}
+
+power-level-10k_download_nerd_font() {
+  if [[ -d $PL10K_FONT_INSTALL_DIR ]]; then
+    echo "$PL10K_FONT_INSTALL_DIR folder exists, assumed font already installed, skip download"
+
+    return 0
+  fi
+
+  echo "Generating download link for '$PL10K_NERD_FONT' nerd font from https://www.nerdfonts.com/font-downloads"
+  link=$(curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest | grep "browser_download_url.*$PL10K_NERD_FONT\.zip" | cut -d : -f 2,3 | tr -d \")
+  p10k_temp_folder=$(mktemp -d)
+
+  echo "Downloading from: '$link' to '$p10k_temp_folder/font.zip'"
+  echo $link | wget -nv --show-progress -i - -O "$p10k_temp_folder/font.zip"
+
+  if ! [[ -f "$p10k_temp_folder/font.zip" ]]; then
+    echo "Download $link fail, aborting installation"
+
+    return 1
+  fi
+
+  echo "$link downloaded successfully..."
+
+  return 0
 }
 
