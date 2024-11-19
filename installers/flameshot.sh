@@ -29,6 +29,7 @@ flameshot_pre_install() {
       ;;
   esac
 
+  echo "Generating latest bat.deb download link..."
   # Need to remove .sha256sum since it have similar signature with actual .deb file
   link=$(curl -s https://api.github.com/repos/flameshot-org/flameshot/releases/latest | grep "browser_download_url.*deb" | grep "ubuntu-$version.*amd64" | grep -v "sha256sum" | cut -d : -f 2,3 | tr -d \")
 

@@ -53,7 +53,5 @@ bat_install() {
 # Post installation may contains user interactive session
 bat_post_install() {
   rm -r $bat_temp_folder
-
-  return 0
 }
 
