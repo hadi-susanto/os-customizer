@@ -90,3 +90,35 @@ sudo apt-get install mc
 - Bottom bar key accelerator is `Alt` key, therefore `9 Menu` should be invoked as `Alt + 9` of `F9`.
 - Accelerator with `M-` prefix means `Ctrl +`, therefore `M-x, o` should be invoked as `Ctrl + x, o`.
 
+# `dnscrypt-proxy` DNS over HTTPS client, skip your goverment cencorship
+
+Reference:
+- [DNS Cryprt Github Page](https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Installation-on-Debian-and-Ubuntu#ubuntu).
+
+```sh
+sudo apt-get -y install dnscrypt-proxy
+```
+
+**TIPS:**
+- Once installed, please check `/lib/systemd/system/dnscrypt-proxy.socket` file to determine where is our DNS Cryprt listening.
+
+
+# `adb` Android Debug Bridge
+
+Reference:
+- [Android Developer Page](https://developer.android.com/tools/adb).
+- [ADB Download Page](https://developer.android.com/studio/releases/platform-tools).
+
+Fortunately `adb` can be run without any installation, just download it and extract to your favorite folder.
+We can skip add `adb` to `PATH` env variable since it rarely used.
+
+Download latest version: [here](https://dl.google.com/android/repository/platform-tools-latest-linux.zip).
+
+# `dconf-editor` Edit Gnome System Variables
+
+```sh
+sudo apt-get -y install dconf-editor
+```
+
+**TIPS:**
+- For battery settings: `/org/cinnamon/settings-daemon/plugins/power/`
