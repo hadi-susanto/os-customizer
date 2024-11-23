@@ -3,7 +3,7 @@
 # Global Variable(s)
 if [[ -z "$ADB_INSTALL_DIR" ]]; then
   # Unless defined we will assume sdkman cloned as our directory siblings
-  ADB_INSTALL_DIR=$(readlink -f "$PWD/../adb")
+  ADB_INSTALL_DIR=$(readlink -f "$PWD/..")/adb
 fi
 
 adb_temp_dir=""
@@ -62,7 +62,7 @@ adb_post_install_message() {
   cat <<EOF
 WARNING: 
  * adb tools isn't added to your shell PATH environment variable !!!
- * $ADB_INSTALL_DIR is a symbolic link to $ADB_INSTALL_DIR-$adb_version
+ * $ADB_INSTALL_DIR is a symbolic link to $(readlink -f "$ADB_INSTALL_DIR")
  * Symbolic link used for easy rollback mechanism
  * Please go to $ADB_INSTALL_DIR, and execute adb command from it.
 EOF

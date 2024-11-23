@@ -9,7 +9,7 @@ PL10K_FONT_INSTALL_DIR="/usr/share/fonts/truetype/$PL10K_NERD_FONT"
 
 if [[ -z "$PL10K_INSTALL_DIR" ]]; then
   # Unless defined we will assume power-level-10 cloned as our directory siblings
-  PL10K_INSTALL_DIR=$(readlink -f "$PWD/../power-level-10k")
+  PL10K_INSTALL_DIR=$(readlink -f "$PWD/..")/power-level-10k
 fi
 
 if [[ -z "${SUDO_USER}" ]]; then
