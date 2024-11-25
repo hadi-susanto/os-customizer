@@ -18,7 +18,7 @@ flameshot_installed() {
 # It's recommended to use pre-install phase to prepare installation instead at install phase
 flameshot_pre_install() {
   echo "Checking Ubuntu version..."
-  version=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_RELEASE | cut -d = -f 2)
+  local version=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_RELEASE | cut -d = -f 2)
   case $version in
     "20.04" | "22.04")
       echo "Ubuntu ver. $version is supported, generating download link."
@@ -31,7 +31,7 @@ flameshot_pre_install() {
 
   echo "Generating latest bat.deb download link..."
   # Need to remove .sha256sum since it have similar signature with actual .deb file
-  link=$(curl -s https://api.github.com/repos/flameshot-org/flameshot/releases/latest | grep "browser_download_url.*deb" | grep "ubuntu-$version.*amd64" | grep -v "sha256sum" | cut -d : -f 2,3 | tr -d \")
+  local link=$(curl -s https://api.github.com/repos/flameshot-org/flameshot/releases/latest | grep "browser_download_url.*deb" | grep "ubuntu-$version.*amd64" | grep -v "sha256sum" | cut -d : -f 2,3 | tr -d \")
 
   if [[ -z $link ]]; then
     echo "Failed to retrieve flameshot latest release, please retry again or check download link if issue persistent"

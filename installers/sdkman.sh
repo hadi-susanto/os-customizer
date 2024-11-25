@@ -3,7 +3,7 @@
 # Global variables, we use same variable as SDKMAN script from https://get.sdkman.io/
 if [[ -z "$SDKMAN_DIR" ]]; then
   # Unless defined we will assume sdkman cloned as our directory siblings
-  SDKMAN_DIR=$(readlink -f "$PWD/../sdkman")
+  SDKMAN_DIR=$(readlink -f "$PWD/..")/sdkman
 fi
 
 # Short and meaningful installer description, describing the app being installed.

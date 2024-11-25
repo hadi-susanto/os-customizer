@@ -53,6 +53,7 @@ installer_method_exists() {
 
 # Loop through all .sh files in the directory
 populate_installers() {
+  local file;
   for file in "$1"/*.sh; do
     # Check if it is a file (not a directory) and ensure the file exists
     if ! [[ -f "$file" ]]; then
@@ -67,9 +68,10 @@ populate_installers() {
     # Try load installer
     source $file
     # Remove the directory path and file extension
-    installer=$(basename "$file" .sh)
+    local installer=$(basename "$file" .sh)
     # Validating sourced script
-    required_methods=("${installer}_installed" "${installer}_description" "${installer}_pre_install" "${installer}_install" "${installer}_post_install")
+    local required_methods=("${installer}_installed" "${installer}_description" "${installer}_pre_install" "${installer}_install" "${installer}_post_install")
+    local method;
     for method in "${required_methods[@]}"; do
       if ! installer_method_exists $file $method; then
         return 1
@@ -90,8 +92,8 @@ populate_installers() {
 
 # Print list of any installers / selected installers with recommended indication
 print_list() {
-  index=1
-  list=("$@")
+  local index=1
+  local list=("$@")
 
   for item in "${list[@]}"; do
     printf "%4d. %-20s" $index $item
@@ -171,7 +173,7 @@ main_loop_user_input() {
     fi
 
     # Convert user input to installer name
-    selected_installer="${file_names[user_input-1]}"
+    local selected_installer="${file_names[user_input-1]}"
 
     # Check if the installer has already been selected
     if [[ " ${selected_installers[@]} " =~ " $selected_installer " ]]; then
@@ -189,22 +191,10 @@ main_loop_user_input() {
 # Helper function to start installation
 start_installation() {
   # Alias function parameter to variable installer for easier scripting
-  installer=$1
+  local installer=$1
 
   # Installation header
   print_header "Installing $installer"
-
-  # Load installer script
-  script_path="$directory/$1.sh"
-  source "$script_path"
-
-  # Validating sourced script
-  required_methods=("${installer}_installed" "${installer}_description" "${installer}_pre_install" "${installer}_install" "${installer}_post_install")
-  for method in "${required_methods[@]}"; do
-    if ! installer_method_exists $script_path $method; then
-      return 1
-    fi
-  done
 
   if (${installer}_installed) && ! [ "$FORCE_INSTALL" == "true" ]; then
     echo -e "\nSkipping '$installer' since it was already installed in your current machine."
@@ -242,10 +232,11 @@ start_installation() {
 
 installation_loop() {
   # Track success / failed installation
-  success_installers=()
-  failed_installers=()
+  local success_installers=()
+  local failed_installers=()
 
   # Execute selected installers
+  local installer;
   for installer in "${selected_installers[@]}"; do
     if start_installation $installer; then
       success_installers+=("$installer")
@@ -281,7 +272,7 @@ installation_loop() {
   fi
 
   # Found some failed installer, just print to users
-  index=1
+  local index=1
   echo "All selected installers have been executed, unfortunately some installer(s) is failed:"
   for installer in "${failed_installers[@]}"; do
     printf "%4d. %s\n" $index $installer

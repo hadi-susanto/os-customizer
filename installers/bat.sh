@@ -18,7 +18,7 @@ bat_installed() {
 # It's recommended to use pre-install phase to prepare installation instead at install phase
 bat_pre_install() {
   echo "Obtaining bat latest release link..."
-  link=$(curl -s https://api.github.com/repos/sharkdp/bat/releases/latest | grep "browser_download_url.*deb" | grep "bat_.*_amd64" | cut -d : -f 2,3 | tr -d \")
+  local link=$(curl -s https://api.github.com/repos/sharkdp/bat/releases/latest | grep "browser_download_url.*deb" | grep "bat_.*_amd64" | cut -d : -f 2,3 | tr -d \")
   
   if [[ -z $link ]]; then
     echo "Failed to retrieve bat latest release, please retry again or check download link if issue persistent"

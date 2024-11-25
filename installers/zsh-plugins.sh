@@ -24,8 +24,7 @@ zsh-plugins_installed() {
 # It's recommended to use pre-install phase to prepare installation instead at install phase
 zsh-plugins_pre_install() {
   # Install our loader...
-  local dot_file;
-  dot_file=$(zsh-plugins_detect_dot_file)
+  local dot_file=$(zsh-plugins_detect_dot_file)
   echo "Checking $dot_file for loader existence..."
 
   if ! [[ -f $dot_file ]]; then
@@ -59,6 +58,7 @@ source "$PWD/zsh/common.plugin.sh"
 # Start loading plugins based on local computer package availability
 EOF
 
+  local file;
   for file in "$PWD"/zsh/*.plugin.sh; do
     if ! [[ -f $file ]]; then
       echo "WARNING: Not a file $file"
@@ -66,9 +66,12 @@ EOF
       continue
     fi
 
-    if [[ $file != "$PWD/zsh/common.plugin.sh" ]]; then
-      zsh-plugins_install_plugin $file
+    if [[ $file == "$PWD/zsh/common.plugin.sh" ]]; then
+      continue
     fi
+
+    # Prepare in case we want to handle return value from install plugin method
+    zsh-plugins_install_plugin $file
   done
 
   echo >> "$OSC_LOADER_FILE"
@@ -103,8 +106,7 @@ zsh-plugins_detect_dot_file() {
 }
 
 zsh-plugins_install_loader() {
-  local suffix;
-  suffix=$(date +%Y%m%d-%H%M%S)
+  local suffix=$(date +%Y%m%d-%H%M%S)
 
   echo "OS Customizer zsh plugins loader not found, installing loader..."
   echo "Backup your $1 to $1.bak-$suffix"
@@ -132,13 +134,43 @@ EOF
 }
 
 zsh-plugins_install_plugin() {
-  executable=$(basename "$1" .plugin.sh)
+  # DON'T remove space after "$1"
+  local executable=$(basename "$1" .plugin.sh)
   echo "Try to install plugin: $1 (executable: $executable)"
 
-  if command -v $executable 2>&1 > /dev/null; then
-    echo -e "source \"$1\"" >> "$OSC_LOADER_FILE"
-  else
+  if ! command -v $executable 2>&1 > /dev/null; then
     echo "# Skip loading plugin: $1 ($executable not available)" >> "$OSC_LOADER_FILE"
+
+    return 0
   fi
+
+  # Do we have some dedicated installer for given plugin?
+  local installer=${1/plugin/install}
+  if ! [[ -f "$installer" ]]; then
+    # Just add plugin as is without any special handling
+    echo -e "source \"$1\"" >> "$OSC_LOADER_FILE"
+
+    return 0
+  fi
+
+  echo "We found dedicated installation file for $executable plugin at: $installer"
+  echo "Loading installer..."
+
+  source "$installer"
+
+  local install_method=_"$executable"_install
+  if ! declare -F "$install_method" > /dev/null; then
+    echo "WARNING: unable to find $install_method from $installer, skipping it"
+
+    return 1
+  fi
+
+  if ! "$install_method" "$OSC_LOADER_FILE" ; then
+    echo "WARNING: $install_method return non-success code, skipping it"
+
+    return 1
+  fi
+
+  echo -e "source \"$1\"" >> "$OSC_LOADER_FILE"
 }
 

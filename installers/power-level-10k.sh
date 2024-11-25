@@ -9,7 +9,7 @@ PL10K_FONT_INSTALL_DIR="/usr/share/fonts/truetype/$PL10K_NERD_FONT"
 
 if [[ -z "$PL10K_INSTALL_DIR" ]]; then
   # Unless defined we will assume power-level-10 cloned as our directory siblings
-  PL10K_INSTALL_DIR=$(readlink -f "$PWD/../power-level-10k")
+  PL10K_INSTALL_DIR=$(readlink -f "$PWD/..")/power-level-10k
 fi
 
 if [[ -z "${SUDO_USER}" ]]; then
@@ -79,7 +79,7 @@ power-level-10k_install() {
     echo "Cloning succeed"
   fi
 
-  theme="$PL10K_INSTALL_DIR/powerlevel10k.zsh-theme"
+  local theme="$PL10K_INSTALL_DIR/powerlevel10k.zsh-theme"
   if ! [[ -f $theme ]]; then
     echo "Corrupt power level 10k repository! '$theme' was not found nor file"
 

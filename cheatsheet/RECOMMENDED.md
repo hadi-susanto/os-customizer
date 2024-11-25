@@ -190,3 +190,22 @@ sudo apt-get update
 sudo apt-get install dconf-editor
 ```
 
+# `tlp` Advanced Laptop Battery Management
+
+Reference:
+- [`tlp` on LinuxConfig](https://linuxconfig.org/how-to-optimize-laptop-battery-life-with-tlp-on-linux).
+- [TLP UI GitHub Page](https://github.com/d4nj1/TLPUI).
+
+```sh
+sudo apt-get update
+sudo apt-get install tlp tlp-rdw
+git clone --depth 1 git@github.com:d4nj1/TLPUI.git tlp-ui
+cd tlp-ui
+python3 -m tlpui
+```
+
+TIPS:
+- `TLPUI` isn't required but it will give you easier live.
+- Complete guide can be found at `/etc/tlp.conf`.
+- Ensure your battery type supported by calling `sudo tlp-stat --battery`.
+
