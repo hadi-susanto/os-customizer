@@ -14,7 +14,7 @@ microsoft-edge_installed() {
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
 # It's recommended to use pre-install phase to prepare installation instead at install phase
 microsoft-edge_pre_install() {
-  codename=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME | cut -d = -f 2)
+  local codename=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME | cut -d = -f 2)
 
   if [[ -f /etc/apt/sources.list.d/microsoft-edge.list ]]; then
     sudo rm /etc/apt/sources.list.d/microsoft-edge.list

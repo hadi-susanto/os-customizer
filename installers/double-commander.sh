@@ -15,8 +15,8 @@ double-commander_installed() {
 # It's recommended to use pre-install phase to prepare installation instead at install phase
 double-commander_pre_install() {
   echo "Checking Ubuntu version..."
-  version=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_RELEASE | cut -d = -f 2)
-  codename="xUbuntu_$version"
+  local version=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_RELEASE | cut -d = -f 2)
+  local codename="xUbuntu_$version"
 
   curl -fsSL "https://download.opensuse.org/repositories/home:Alexx2000/$codename/Release.key" | sudo gpg --yes --dearmor --output /etc/apt/keyrings/double-commander.gpg &&
     echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/double-commander.gpg] http://download.opensuse.org/repositories/home:/Alexx2000/$codename/ /" | sudo tee /etc/apt/sources.list.d/double-commander.list &&

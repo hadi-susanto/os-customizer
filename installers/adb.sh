@@ -29,7 +29,7 @@ adb_installed() {
 adb_pre_install() {
   adb_temp_dir=$(mktemp -d)
 
-  link="https://dl.google.com/android/repository/platform-tools-latest-linux.zip"
+  local link="https://dl.google.com/android/repository/platform-tools-latest-linux.zip"
   echo "Downloading latest adb tools from $link"
   echo $link | wget -nv --show-progress -i - -O "$adb_temp_dir/adb.zip"
 }

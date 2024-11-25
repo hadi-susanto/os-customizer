@@ -79,7 +79,7 @@ power-level-10k_install() {
     echo "Cloning succeed"
   fi
 
-  theme="$PL10K_INSTALL_DIR/powerlevel10k.zsh-theme"
+  local theme="$PL10K_INSTALL_DIR/powerlevel10k.zsh-theme"
   if ! [[ -f $theme ]]; then
     echo "Corrupt power level 10k repository! '$theme' was not found nor file"
 
