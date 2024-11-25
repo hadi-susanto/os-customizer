@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# This one SHOULD by sync'ed with ../zsh/tlp.install.sh
 if [[ -z "$TLP_UI_INSTALL_DIR" ]]; then
   # Unless defined we will assume tlp-ui cloned as our directory siblings
   TLP_UI_INSTALL_DIR=$(readlink -f "$PWD/..")/tlp-ui
