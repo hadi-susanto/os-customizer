@@ -39,3 +39,17 @@ export SDKMAN_DIR="/usr/local/sdkman"
 curl -s "https://get.sdkman.io" | bash
 ```
 
+# `mvn` Apache Maven
+
+Reference:
+- [Apache Maven Download Page](https://maven.apache.org/download.cgi).
+
+```sh
+wget -nv --show-progress -i [apache-maven-download-link]
+unzip [your-downloaded-file.zip]
+```
+
+**TIPS**:
+- Please change apache maven cache directory, it will take lots of space.
+It can be done by editing `[apache-maven-dir]/conf/settings.xml` and provide value for `<localRepository>`.
+

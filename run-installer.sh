@@ -7,8 +7,8 @@ file_names=()
 # Initialize an empty array to store valid user choices
 selected_installers=()
 # Recommended software / packages
-recommended_installers=(apt-fast bat cryptomator dnscrypt-proxy double-commander eza flameshot insync keepass-xc power-level-10k terminator zsh zsh-plugins)
-development_installers=(microsoft-edge sdkman)
+recommended_installers=(apt-fast bat cryptomator dnscrypt-proxy double-commander eza flameshot insync keepass-xc terminator zsh power-level-10k zsh-plugins)
+development_installers=(apache-maven microsoft-edge sdkman)
 # ANSI colors (https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux)
 CYAN='\033[0;36m'
 LIGHT_BLUE='\033[1;34m'
