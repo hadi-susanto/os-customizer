@@ -45,6 +45,11 @@ adb_install() {
     rm -r "$ADB_INSTALL_DIR-$adb_version"
   fi
 
+  if [[ -L "$ADB_INSTALL_DIR" ]]; then
+    echo "adb symbolic link found, removing: $ADB_INSTALL_DIR"
+    rm "$ADB_INSTALL_DIR"
+  fi
+
   mkdir "$ADB_INSTALL_DIR-$adb_version" &&
     cp -r -v "$adb_temp_dir"/platform-tools/* "$ADB_INSTALL_DIR-$adb_version/" &&
     ln -s -d "$ADB_INSTALL_DIR-$adb_version" "$ADB_INSTALL_DIR"
