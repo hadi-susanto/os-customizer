@@ -14,13 +14,14 @@ chmod +x run-installer.sh
 
 ### Environment Variable(s) to Change Installer Behavior(s)
 
-| Env. Variable        | Description                                                                                                                            |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `FORCE_INSTALL`      | Used to force install some application, usage: `FORCE_INSTALL=true ./run-installer.sh`                                                 |
-| `PL10K_NERD_FONT`    | Nerd Font family to be installed, default: `Inconsolata`. Find more at [Nerd Font Download](https://www.nerdfonts.com/font-downloads). |
-| `PL10K_INSTALL_DIR`  | Define power level 10k installation directory, default: `$PWD/../power-level-10k`                                                      |
-| `TLP_UI_INSTALL_DIR` | Define `TLPUI` installation directory, default: `$PWD/../tlp-ui`                                                                       |
-| `SDKMAN_DIR`         | Define `SDKMAN` installation directory, default: `$PWD/../sdkman`                                                                      |
+| Env. Variable              | Description                                                                                                                            |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `APACHE_MAVEN_INSTALL_DIR` | Define apache maven installation directory, default: `$PWD/../maven`                                                                   |
+| `FORCE_INSTALL`            | Used to force install some application, usage: `FORCE_INSTALL=true ./run-installer.sh`                                                 |
+| `PL10K_NERD_FONT`          | Nerd Font family to be installed, default: `Inconsolata`. Find more at [Nerd Font Download](https://www.nerdfonts.com/font-downloads). |
+| `PL10K_INSTALL_DIR`        | Define power level 10k installation directory, default: `$PWD/../power-level-10k`                                                      |
+| `TLP_UI_INSTALL_DIR      ` | Define `TLPUI` installation directory, default: `$PWD/../tlp-ui`                                                                       |
+| `SDKMAN_DIR`               | Define `SDKMAN` installation directory, default: `$PWD/../sdkman`                                                                      |
 
 ## Further Reading
 
