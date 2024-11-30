@@ -38,7 +38,8 @@ apache-maven_pre_install() {
 # Called after pre-install phase completed successfully
 # Installation phase, usually via package manager installation or manual download...
 apache-maven_install() {
-  unzip "$maven_temp_dir/maven.zip" -d $maven_temp_dir
+  echo "Extracting $maven_temp_dir/maven.zip ..."
+  unzip -q "$maven_temp_dir/maven.zip" -d $maven_temp_dir
 
   local maven_folder;
   for dir in "$maven_temp_dir"/apache-maven*/; do
@@ -49,28 +50,31 @@ apache-maven_install() {
   done
 
   if [[ -z "$maven_folder" ]]; then
-    echo "Unable to find folder named maven* inside $maven_temp_dir"
+    echo "Unable to find folder named apache-maven* inside $maven_temp_dir"
     echo "Aborting installation... please download maven manually from https://maven.apache.org/download.cgi"
 
     return 1
   fi
 
   local last_folder=$(basename "$maven_folder")
-  local maven_version=${last_folder#apache-maven-}
+  local latest_version=${last_folder#apache-maven-}
 
-  if [[ -d "$APACHE_MAVEN_INSTALL_DIR-$maven_version" ]]; then
-    echo "Previous installation folder found, removing: $APACHE_MAVEN_INSTALL_DIR-$maven_version"
-    rm -r "$APACHE_MAVEN_INSTALL_DIR-$maven_version"
+  if [[ -d "$APACHE_MAVEN_INSTALL_DIR-$latest_version" ]]; then
+    echo "Previous installation folder found, removing: $APACHE_MAVEN_INSTALL_DIR-$latest_version"
+    rm -r "$APACHE_MAVEN_INSTALL_DIR-$latest_version"
   fi
 
   if [[ -L "$APACHE_MAVEN_INSTALL_DIR" ]]; then
-    echo "Maven symbolic link found, removing: $APACHE_MAVEN_INSTALL_DIR"
+    echo "Apache Maven symbolic link found, removing: $APACHE_MAVEN_INSTALL_DIR"
     rm "$APACHE_MAVEN_INSTALL_DIR"
   fi
 
-  mkdir "$APACHE_MAVEN_INSTALL_DIR-$maven_version" &&
-    cp -r -v "$maven_folder"/* "$APACHE_MAVEN_INSTALL_DIR-$maven_version" &&
-    ln -s -d "$APACHE_MAVEN_INSTALL_DIR-$maven_version" "$APACHE_MAVEN_INSTALL_DIR"
+  echo "Copying $maven_folder into $APACHE_MAVEN_INSTALL_DIR-$latest_version"
+  mkdir "$APACHE_MAVEN_INSTALL_DIR-$latest_version" &&
+    cp -r "$maven_folder"/* "$APACHE_MAVEN_INSTALL_DIR-$latest_version"
+
+  echo "Creating symbolic link $APACHE_MAVEN_INSTALL_DIR-$latest_version -> $APACHE_MAVEN_INSTALL_DIR"
+  ln -s -d "$APACHE_MAVEN_INSTALL_DIR-$latest_version" "$APACHE_MAVEN_INSTALL_DIR"
 }
 
 # Called after installation completed successfully
@@ -79,14 +83,14 @@ apache-maven_post_install() {
   rm -r $maven_temp_dir
 
   # Do nothing don't touch PATH env variable
-  if command -v apt-fast 2>&1 > /dev/null; then
+  if command -v mvn 2>&1 > /dev/null; then
     return 0
   fi
 
   echo "mvn isn't found in current shell PATH, installing maven binary into ~/.profile"
   echo >> ~/.profile
   echo "# OS Customizer script, add apache maven binaries to environment variable" >> ~/.profile
-  echo "PATH=$APACHE_MAVEN_INSTALL_DIR/bin:$PATH" >> ~/.profile
+  echo "PATH=$APACHE_MAVEN_INSTALL_DIR/bin:\$PATH" >> ~/.profile
 }
 
 # Optional to implements, this method called once all installation done

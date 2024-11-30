@@ -37,7 +37,8 @@ adb_pre_install() {
 # Called after pre-install phase completed successfully
 # Installation phase, usually via package manager installation or manual download...
 adb_install() {
-  unzip "$adb_temp_dir/adb.zip" -d $adb_temp_dir
+  echo "Extracting $adb_temp_dir/adb.zip ..."
+  unzip -q "$adb_temp_dir/adb.zip" -d $adb_temp_dir
   adb_version=$("$adb_temp_dir"/platform-tools/adb --version | grep "Android Debug Bridge version" | cut -d " " -f 5)
 
   if [[ -d "$ADB_INSTALL_DIR-$adb_version" ]]; then
@@ -50,9 +51,12 @@ adb_install() {
     rm "$ADB_INSTALL_DIR"
   fi
 
+  echo "Copying $adb_temp_dir/platform-tools into $ADB_INSTALL_DIR-$latest_version"
   mkdir "$ADB_INSTALL_DIR-$adb_version" &&
-    cp -r -v "$adb_temp_dir"/platform-tools/* "$ADB_INSTALL_DIR-$adb_version/" &&
-    ln -s -d "$ADB_INSTALL_DIR-$adb_version" "$ADB_INSTALL_DIR"
+    cp -r "$adb_temp_dir"/platform-tools/* "$ADB_INSTALL_DIR-$adb_version/"
+
+  echo "Creating symbolic link $ADB_INSTALL_DIR-$latest_version -> $ADB_INSTALL_DIR"
+  ln -s -d "$ADB_INSTALL_DIR-$adb_version" "$ADB_INSTALL_DIR"
 }
 
 # Called after installation completed successfully
