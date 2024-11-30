@@ -22,7 +22,7 @@ chmod +x run-installer.sh
 | `FORCE_INSTALL`            | Used to force install some application, usage: `FORCE_INSTALL=true ./run-installer.sh`                                                 |
 | `PL10K_NERD_FONT`          | Nerd Font family to be installed, default: `Inconsolata`. Find more at [Nerd Font Download](https://www.nerdfonts.com/font-downloads). |
 | `PL10K_INSTALL_DIR`        | Define power level 10k installation directory, default: `$PWD/../power-level-10k`                                                      |
-| `TLP_UI_INSTALL_DIR      ` | Define `TLPUI` installation directory, default: `$PWD/../tlp-ui`                                                                       |
+| `TLP_UI_INSTALL_DIR`       | Define `TLPUI` installation directory, default: `$PWD/../tlp-ui`                                                                       |
 | `SDKMAN_DIR`               | Define `SDKMAN` installation directory, default: `$PWD/../sdkman`                                                                      |
 
 **ZSH Plugin Environment Variable (Used when install zsh-plugin)**
