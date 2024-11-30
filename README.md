@@ -14,6 +14,8 @@ chmod +x run-installer.sh
 
 ### Environment Variable(s) to Change Installer Behavior(s)
 
+**App Environment Variable**
+
 | Env. Variable              | Description                                                                                                                            |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | `APACHE_MAVEN_INSTALL_DIR` | Define apache maven installation directory, default: `$PWD/../maven`                                                                   |
@@ -22,6 +24,12 @@ chmod +x run-installer.sh
 | `PL10K_INSTALL_DIR`        | Define power level 10k installation directory, default: `$PWD/../power-level-10k`                                                      |
 | `TLP_UI_INSTALL_DIR      ` | Define `TLPUI` installation directory, default: `$PWD/../tlp-ui`                                                                       |
 | `SDKMAN_DIR`               | Define `SDKMAN` installation directory, default: `$PWD/../sdkman`                                                                      |
+
+**ZSH Plugin Environment Variable (Used when install zsh-plugin)**
+
+| Env. Variable                 | Description                                                                                                                         |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `MKVMERGE_DEFAULT_OUTPUT_DIR` | Used to set default value of `MKVMERGE_DEFAULT_OUTPUT_DIR`, this variable used by [`mkvmerge.install.sh`](zsh/mkvmerge.install.sh). |
 
 ## Further Reading
 
