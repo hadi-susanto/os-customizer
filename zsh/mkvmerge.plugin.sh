@@ -40,7 +40,7 @@ mkvmerge-batch-edit-tracks() {
 
   local output_dir;
   if [[ -z "$MKVMERGE_DEFAULT_OUTPUT_DIR" ]]; then
-    output_dir="./output"
+    output_dir="output"
   else
     output_dir="$MKVMERGE_DEFAULT_OUTPUT_DIR"
   fi
