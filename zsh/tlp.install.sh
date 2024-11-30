@@ -1,4 +1,4 @@
-_tlp_install() {
+tlp_plugin_install() {
   if ! command -v python3 2>&1 > /dev/null; then
     echo "Python 3.x not found, unable to install TLPUI plugin"
 

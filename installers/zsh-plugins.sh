@@ -158,7 +158,7 @@ zsh-plugins_install_plugin() {
 
   source "$installer"
 
-  local install_method=_"$executable"_install
+  local install_method="$executable"_plugin_install
   if ! declare -F "$install_method" > /dev/null; then
     echo "WARNING: unable to find $install_method from $installer, skipping it"
 

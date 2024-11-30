@@ -122,3 +122,19 @@ sudo apt-get -y install dconf-editor
 
 **TIPS:**
 - For battery settings: `/org/cinnamon/settings-daemon/plugins/power/`
+
+# `mkvtoolnix-gui`, `mkvtoolnix`, `mkvmerge` your `.mkv` tools
+
+Reference:
+- [MKVToolNix Download Page](https://mkvtoolnix.download/downloads.html#ubuntu).
+
+```sh
+curl -fsSL https://mkvtoolnix.download/gpg-pub-moritzbunkus.gpg | sudo gpg --dearmor --output /etc/apt/keyrings/mkvtoolnix-gui.gpg
+echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/mkvtoolnix-gui.gpg] https://mkvtoolnix.download/ubuntu/ $(lsb_release -c -s) main' | sudo tee /etc/apt/sources.list.d/mkvtoolnix-gui.list
+sudo apt-get update
+sudo apt-get install mkvtoolnix mkvtoolnix-gui
+```
+
+TIPS:
+- `mkvmerge` is part of `mkvtoolnix` package.
+
