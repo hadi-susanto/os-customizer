@@ -4,6 +4,39 @@ Contains development packages, used for works only
 
 **WARNING:** You should run these cheat sheet in root of this repository, otherwise it may fail.
 
+# `docker` Container
+
+Reference:
+- [Docker Installation on Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
+
+```sh
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor --output /etc/apt/keyrings/docker.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME | cut -d = -f 2) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+## HIGHLY RECOMMENDED move your `/var/lib/docker` folder
+Move your docker `/var/lib` into another directory, docker images and container will TAKE A LOT OF SPACES.
+Reference:
+- [Move Docker Data to Another Location](https://mrkandreev.name/snippets/how_to_move_docker_data_to_another_location/).
+- [Docker daemon configuration overview](https://docs.docker.com/engine/daemon/).
+- [`dockerd` options](https://docs.docker.com/reference/cli/dockerd/#daemon).
+
+```sh
+sudo systemctl stop docker
+rsync -avP /var/lib/docker/ /path/to/new/docker/location
+sudo nano /etc/docker/daemon.json
+sudo systemctl start docker
+```
+
+`/etc/docker/daemon.json` content
+
+```json
+{
+  "data-root": "/path/to/new/docker/location"
+}
+```
+
 # `microsoft-edge-stable` just another Chromium based browser with vertical tab
 
 Reference:
