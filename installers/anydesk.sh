@@ -8,7 +8,7 @@ anydesk_description() {
 # Check whether app already installed or not, checking can be easily done by "command" function
 # to check command existence.
 anydesk_installed() {
-  command -v template 2>&1 > /dev/null
+  command -v anydesk 2>&1 > /dev/null
 }
 
 # Called before installation phase, used to update repositories, downloading dependencies, etc.
