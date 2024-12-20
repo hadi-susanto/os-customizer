@@ -29,9 +29,9 @@ pg-admin_pre_install() {
 # Installation phase, usually via package manager installation or manual download...
 pg-admin_install() {
   if command -v apt-fast 2>&1 > /dev/null; then
-    sudo apt-fast -y pgadmin4-desktop
+    sudo apt-fast -y install pgadmin4-desktop
   else
-    sudo apt-get -y pgadmin4-desktop
+    sudo apt-get -y install pgadmin4-desktop
   fi
 }
 
