@@ -138,3 +138,16 @@ sudo apt-get install mkvtoolnix mkvtoolnix-gui
 TIPS:
 - `mkvmerge` is part of `mkvtoolnix` package.
 
+# `anydesk` Remote any computer with ease, similar to TeamViewer
+
+Reference:
+- [AnyDesk Download Page](https://anydesk.com/en-gb/downloads/linux).
+- [AnyDesk Repository Page](http://deb.anydesk.com/howto.html).
+
+```sh
+curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo gpg --dearmor --output /etc/apt/keyrings/anydesk.gpg
+echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/anydesk.gpg] ttp://deb.anydesk.com/ all main' | sudo tee /etc/apt/sources.list.d/anydesk-stable.list
+sudo apt-get update
+sudo apt-get install anydesk
+```
+
