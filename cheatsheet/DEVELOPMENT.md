@@ -40,6 +40,12 @@ sudo usermod -aG docker $USER
 }
 ```
 
+# `dbeaver` DBeaver Community
+
+Reference: [DBeaver Download Page](https://dbeaver.io/download/).
+
+Just download `.deb` from it and install it.
+
 # `microsoft-edge-stable` just another Chromium based browser with vertical tab
 
 Reference:
