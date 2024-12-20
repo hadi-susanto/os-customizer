@@ -8,6 +8,7 @@ Contains development packages, used for works only
 
 Reference:
 - [Docker Installation on Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
+- [Docker Linux Post Install](https://docs.docker.com/engine/install/linux-postinstall/).
 
 ```sh
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor --output /etc/apt/keyrings/docker.gpg
@@ -27,6 +28,8 @@ sudo systemctl stop docker
 rsync -avP /var/lib/docker/ /path/to/new/docker/location
 sudo nano /etc/docker/daemon.json
 sudo systemctl start docker
+sudo groupadd docker
+sudo usermod -aG docker $USER
 ```
 
 `/etc/docker/daemon.json` content

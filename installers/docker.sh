@@ -49,14 +49,14 @@ docker_post_install() {
   sudo systemctl stop docker
 
   echo "Copying /var/lib/docker to $DOCKER_VAR_LIB_DIR"
-  rsync -avP /var/lib/docker/ "$DOCKER_VAR_LIB_DIR"
+  sudo rsync -aP /var/lib/docker/ "$DOCKER_VAR_LIB_DIR"
 
   if [[ -f "/etc/docker/daemon.json" ]]; then
     echo "Existing /etc/docker/daemon.json was found, installer WILL NOT touch it"
     echo "Please check it manually and ensure there is data-root key in the json file"
   else
     echo "Writing /etc/docker/daemon.json"
-    sudo cat>/etc/docker/daemon.json <<EOF
+    sudo tee /etc/docker/daemon.json <<EOF
 {
   "data-root": "$DOCKER_VAR_LIB_DIR"
 }
@@ -65,14 +65,21 @@ EOF
 
   echo "Restart docker..."
   sudo systemctl start docker
+
+  echo "Creating docker group (it may failed when docker group already exists)"
+  sudo groupadd docker
+
+  echo "Adding current user ($USER) to docker group"
+  sudo usermod -aG docker $USER
 }
 
 # Optional to implements, this method called once all installation done
 # Useful to print informational message to users
 docker_post_install_message() {
   cat <<EOF
-Docker successfully installed, and please check your /ect/docker/daemon.json file.
-NOTE: We don't remove /var/lib/docker, if you want to remove it please do it manually.
+- Docker successfully installed, and please check your /ect/docker/daemon.json file.
+- We don't remove /var/lib/docker, if you want to remove it please do it manually.
+- We add current user ($USER) into docker group, please re-login to apply user groups
 EOF
 }
 
