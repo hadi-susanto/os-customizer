@@ -23,7 +23,7 @@ dbeaver-community_pre_install() {
   echo "Downloading from: '$link' to '$dbeaver_community_temp_folder/dbeaver-ce_latest.deb'"
   echo $link | wget -nv --show-progress -i - -O "$dbeaver_community_temp_folder/dbeaver-ce_latest.deb"
 
-  if [[ -f "$dbeaver_community_temp_folder/flameshot_latest.deb" ]]; then
+  if [[ -f "$dbeaver_community_temp_folder/dbeaver-ce_latest.deb" ]]; then
     echo "Download success!"
 
     return 0
@@ -37,7 +37,7 @@ dbeaver-community_pre_install() {
 # Called after pre-install phase completed successfully
 # Installation phase, usually via package manager installation or manual download...
 dbeaver-community_install() {
-  sudo dpkg -i "$dbeaver_community_temp_folder/flameshot_latest.deb"
+  sudo dpkg -i "$dbeaver_community_temp_folder/dbeaver-ce_latest.deb"
 
   return 0
 }
