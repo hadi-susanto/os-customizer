@@ -46,6 +46,18 @@ Reference: [DBeaver Download Page](https://dbeaver.io/download/).
 
 Just download `.deb` from it and install it.
 
+# `pgAdmin4` PostgreSQL Tools
+
+Dedicated for PostgreSQL instance, have better integration with PostgreSQL compared to DBeaver
+
+Reference: [phAdmin 4 APT](https://www.pgadmin.org/download/pgadmin-4-apt/).
+
+```sh
+curl -fsSL https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor --output /etc/apt/keyrings/pgadmin-org.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME | cut -d = -f 2) pgadmin4 main" | sudo tee /etc/apt/sources.list.d/pg-admin4.list
+sudo apt-get install pgadmin4-desktop
+```
+
 # `microsoft-edge-stable` just another Chromium based browser with vertical tab
 
 Reference:
