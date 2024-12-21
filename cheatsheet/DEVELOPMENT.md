@@ -40,6 +40,12 @@ sudo usermod -aG docker $USER
 }
 ```
 
+# `dbgate` DbGate Community
+
+Reference: [DbGate Community Download Page](https://dbgate.org/download-community/).
+
+Just download `.deb` from it and install it.
+
 # `dbeaver` DBeaver Community
 
 Reference: [DBeaver Download Page](https://dbeaver.io/download/).
