@@ -64,6 +64,16 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/pgadmin-org.gpg] https://ftp.p
 sudo apt-get install pgadmin4-desktop
 ```
 
+# `mongodb-compass` MongoDB GUI Tools
+
+GUI client for mongodb.
+
+Reference:
+- [MongoDB Compass Download Page](https://www.mongodb.com/try/download/compass).
+- [GitHub Release Page](https://github.com/mongodb-js/compass/releases).
+
+Just download `.deb` file and install it.
+
 # `microsoft-edge-stable` just another Chromium based browser with vertical tab
 
 Reference:
