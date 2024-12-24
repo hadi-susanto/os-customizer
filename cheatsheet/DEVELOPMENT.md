@@ -4,6 +4,76 @@ Contains development packages, used for works only
 
 **WARNING:** You should run these cheat sheet in root of this repository, otherwise it may fail.
 
+# `docker` Container
+
+Reference:
+- [Docker Installation on Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
+- [Docker Linux Post Install](https://docs.docker.com/engine/install/linux-postinstall/).
+
+```sh
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor --output /etc/apt/keyrings/docker.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME | cut -d = -f 2) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+## HIGHLY RECOMMENDED move your `/var/lib/docker` folder
+Move your docker `/var/lib` into another directory, docker images and container will TAKE A LOT OF SPACES.
+Reference:
+- [Move Docker Data to Another Location](https://mrkandreev.name/snippets/how_to_move_docker_data_to_another_location/).
+- [Docker daemon configuration overview](https://docs.docker.com/engine/daemon/).
+- [`dockerd` options](https://docs.docker.com/reference/cli/dockerd/#daemon).
+
+```sh
+sudo systemctl stop docker
+rsync -avP /var/lib/docker/ /path/to/new/docker/location
+sudo nano /etc/docker/daemon.json
+sudo systemctl start docker
+sudo groupadd docker
+sudo usermod -aG docker $USER
+```
+
+`/etc/docker/daemon.json` content
+
+```json
+{
+  "data-root": "/path/to/new/docker/location"
+}
+```
+
+# `dbgate` DbGate Community
+
+Reference: [DbGate Community Download Page](https://dbgate.org/download-community/).
+
+Just download `.deb` from it and install it.
+
+# `dbeaver` DBeaver Community
+
+Reference: [DBeaver Download Page](https://dbeaver.io/download/).
+
+Just download `.deb` from it and install it.
+
+# `pgAdmin4` PostgreSQL Tools
+
+Dedicated for PostgreSQL instance, have better integration with PostgreSQL compared to DBeaver
+
+Reference: [phAdmin 4 APT](https://www.pgadmin.org/download/pgadmin-4-apt/).
+
+```sh
+curl -fsSL https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor --output /etc/apt/keyrings/pgadmin-org.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME | cut -d = -f 2) pgadmin4 main" | sudo tee /etc/apt/sources.list.d/pg-admin4.list
+sudo apt-get install pgadmin4-desktop
+```
+
+# `mongodb-compass` MongoDB GUI Tools
+
+GUI client for mongodb.
+
+Reference:
+- [MongoDB Compass Download Page](https://www.mongodb.com/try/download/compass).
+- [GitHub Release Page](https://github.com/mongodb-js/compass/releases).
+
+Just download `.deb` file and install it.
+
 # `microsoft-edge-stable` just another Chromium based browser with vertical tab
 
 Reference:
