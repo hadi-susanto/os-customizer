@@ -1,42 +1,47 @@
-mkvmerge-set-default-tracks() {
-  # Check if at least 3 parameters are provided
-  if [ "$#" -lt 3 ]; then
-    echo "Usage: mkvmerge-set-default-tracks <source.mkv> <output.mkv> <track_flag>..."
-    echo "Example: mkvmerge-set-default-tracks \"input.mkv\" \"output.mkv\" \"1:0\" \"3:1\""
+mkvmerge-process-file() {
+  # Check if at least 4 parameters are provided
+  if [ "$#" -lt 4 ]; then
+    echo "Usage: mkvmerge-process-file <source.mkv> <output.mkv> <mkvmerge-option> <track_flag>..."
+    echo "Example: mkvmerge-process-file \"input.mkv\" \"output.mkv\" --default-track-flag \"1:0\" \"3:1\""
     return 1
   fi
 
-  # Assign the source and output MKV file parameters
+  # Assign parameters to local variable for easier reading
   local source_mkv="$1"
   local output_mkv="$2"
-  shift 2
+  local option="$3"
+  shift 3
 
   # Initialize the mkvmerge command
   local mkvmerge_command=("mkvmerge" "-o" "$output_mkv")
 
   # Append each track flag argument to the command
   for track_flag in "$@"; do
-    mkvmerge_command+=("--default-track-flag" "$track_flag")
+    mkvmerge_command+=("$option" "$track_flag")
   done
 
   # Add the source MKV file to the command
   mkvmerge_command+=("$source_mkv")
 
   # Print the command for debugging (optional)
-  echo "Running command: ${mkvmerge_command[*]}"
+  echo "Executing command: ${mkvmerge_command[*]}"
 
   # Execute the command
   "${mkvmerge_command[@]}"
   return $?
 }
 
-mkvmerge-batch-edit-tracks() {
-  # Check if at least 1 parameter is provided
-  if [ "$#" -lt 1 ]; then
-    echo "Usage: mkvmerge-batch-edit-tracks <track_flag>..."
-    echo "Example: mkvmerge-batch-edit-tracks \"1:0\" \"3:1\" \"4:0\""
+mkvmerge-batch-process() {
+  # Check if at least 2 parameters is provided
+  if [ "$#" -lt 2 ]; then
+    echo "Usage: mkvmerge-batch-process <mkvmerge-option> <track_flag>..."
+    echo "Example: mkvmerge-batch-process --default-track-flag \"1:0\" \"3:1\" \"4:0\""
     return 1
   fi
+
+  # Assign parameters to local variable for easier reading
+  local option="$1"
+  shift 1
 
   local output_dir;
   if [[ -z "$MKVMERGE_DEFAULT_OUTPUT_DIR" ]]; then
@@ -62,9 +67,31 @@ mkvmerge-batch-edit-tracks() {
     local output_file="$output_dir/${mkv_file}"
 
     # Call mkvmerge-set-default-tracks with the parameters
-    echo "Executing mkvmerge-set-default-tracks \"$mkv_file\" \"$output_file\" $@"
-    mkvmerge-set-default-tracks "$mkv_file" "$output_file" "$@"
+    echo "Executing mkvmerge-batch-process \"$mkv_file\" \"$output_file\" $option $@"
+    mkvmerge-process-file "$mkv_file" "$output_file" "$option" "$@"
     echo
   done
+}
+
+mkvmerge-batch-default-tracks() {
+  # Check if at least 1 parameter1 is provided
+  if [ "$#" -lt 1 ]; then
+    echo "Usage: mkvmerge-batch-default-tracks <track_flag>..."
+    echo "Example: mkvmerge-batch-default-tracks \"1:0\" \"3:1\" \"4:0\""
+    return 1
+  fi
+
+  mkvmerge-batch-process "--default-track-flag" "$@"
+}
+
+mkvmerge-batch-forced-displays() {
+  # Check if at least 1 parameter1 is provided
+  if [ "$#" -lt 1 ]; then
+    echo "Usage: mkvmerge-batch-forced-displays <track_flag>..."
+    echo "Example: mkvmerge-batch-forced-displays \"1:0\" \"3:1\" \"4:0\""
+    return 1
+  fi
+
+  mkvmerge-batch-process "--forced-display-flag" "$@"
 }
 
